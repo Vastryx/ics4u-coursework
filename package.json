@@ -1,0 +1,16 @@
+{
+	"name": "ics4u-coursework",
+	"version": "0.0.0",
+	"private": true,
+	"license": "Unlicense",
+	"scripts": {
+		"lint": "oxlint --type-aware --type-check",
+		"format": "oxfmt"
+	},
+	"devDependencies": {
+		"oxfmt": "^0.34.0",
+		"oxlint": "^1.49.0",
+		"oxlint-tsgolint": "^0.14.1"
+	},
+	"packageManager": "pnpm@10.30.0"
+}
