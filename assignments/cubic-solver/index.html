@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="src/style.css" />
+		<title>Cubic Solver</title>
+	</head>
+	<body>
+		<div class="top">
+			<h1>Cubic Solver</h1>
+			<form>
+				<div>
+					<label for="a">a value:</label>
+					<input type="number" name="a" id="a" required />
+				</div>
+				<div>
+					<label for="b">b value:</label>
+					<input type="number" name="b" id="b" required />
+				</div>
+				<div>
+					<label for="c">c value:</label>
+					<input type="number" name="c" id="c" required />
+				</div>
+				<div>
+					<label for="d">d value:</label>
+					<input type="number" name="d" id="d" required />
+				</div>
+				<input type="submit" value="Solve Cubic" />
+			</form>
+		</div>
+		<div class="bottom">
+			<p id="equation"></p>
+			<div class="answer">
+				<table>
+					<tbody>
+						<tr>
+							<th scope="row">p</th>
+							<td id="p"></td>
+						</tr>
+						<tr>
+							<th scope="row">q</th>
+							<td id="q"></td>
+						</tr>
+						<tr>
+							<th scope="row">Discriminant</th>
+							<td id="discriminant"></td>
+						</tr>
+						<tr>
+							<th scope="row">Value</th>
+							<td>x</td>
+							<td>y</td>
+						</tr>
+						<tr>
+							<th scope="row">Root 1</th>
+							<td id="root1"></td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<th scope="row">Root 2</th>
+							<td id="root2"></td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<th scope="row">Root 3</th>
+							<td id="root3"></td>
+							<td>0</td>
+						</tr>
+					</tbody>
+				</table>
+				<canvas id="graph" width="600" height="400"></canvas>
+			</div>
+		</div>
+		<script type="module" src="/src/main.ts"></script>
+	</body>
+</html>
