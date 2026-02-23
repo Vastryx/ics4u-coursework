@@ -2,12 +2,34 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="src/style.css" />
 		<title>cubic-solver</title>
 	</head>
 	<body>
-		<div id="app"></div>
+		<div class="top">
+			<h1>Cubic Solver</h1>
+			<form>
+				<div class="input">
+					<label for="a">a value:</label>
+					<input type="number" name="a" id="a" required />
+				</div>
+				<div class="input">
+					<label for="b">b value:</label>
+					<input type="number" name="b" id="b" required />
+				</div>
+				<div class="input">
+					<label for="c">c value:</label>
+					<input type="number" name="c" id="c" required />
+				</div>
+				<div class="input">
+					<label for="d">d value:</label>
+					<input type="number" name="d" id="d" required />
+				</div>
+				<input type="submit" value="Calculate" />
+			</form>
+		</div>
+		<canvas id="graph" width="600" height="400"></canvas>
 		<script type="module" src="/src/main.ts"></script>
 	</body>
 </html>
