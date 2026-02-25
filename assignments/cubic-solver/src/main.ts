@@ -13,18 +13,30 @@ form.addEventListener('submit', (event) => {
 	const q = (27 * a ** 2 * d - 9 * a * b * c + 2 * b ** 3) / (27 * a ** 3);
 	const discriminant = (q / 2) ** 2 + (p / 3) ** 3;
 
-	console.log(`p : ${p}`);
-	console.log(`q : ${q}`);
-	console.log(`discriminant : ${discriminant}`);
-
-	if (discriminant < 0) {
-		console.log(1);
-	} else if (discriminant > 0) {
+	function cardano(p: number, q: number) {
 		const part = -q / 2;
 		const part2 = Math.sqrt((q / 2) ** 2 + (p / 3) ** 3);
-		const root1 = Math.cbrt(part + part2) + Math.cbrt(part - part2) - b / (3 * a);
-		console.log(root1);
+		return Math.cbrt(part + part2) + Math.cbrt(part - part2) - b / (3 * a);
+	}
+
+	function trig(p: number, q: number) {
+		const angle = (1 / 3) * Math.acos(-q / (2 * Math.sqrt(-((p / 3) ** 3))));
+		const part = 2 * Math.sqrt(-p / 3);
+		const part2 = 1;
+		return Math.cbrt(part + part2) + Math.cbrt(part - part2) - b / (3 * a);
+	}
+
+	if (discriminant < 0) {
+		// 3 real
+		cardano(p, q);
+	} else if (discriminant > 0) {
+		// 1 real, 2 complex
+		cardano(p, q);
+	} else if (p !== 0) {
+		// 3 real (Double and single root)
+		cardano(p, q);
 	} else {
-		console.log(3);
+		// 1 real (Triple)
+		cardano(p, q);
 	}
 });
