@@ -22,7 +22,7 @@ form.addEventListener('submit', (event) => {
 	function trig(p: number, q: number) {
 		const angle = (1 / 3) * Math.acos(-q / (2 * Math.sqrt(-((p / 3) ** 3))));
 		const part = 2 * Math.sqrt(-p / 3);
-		const part2 = 1;
+		const part2 = b / (3 * a);
 		return Math.cbrt(part + part2) + Math.cbrt(part - part2) - b / (3 * a);
 	}
 
