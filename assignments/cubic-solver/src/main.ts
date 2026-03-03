@@ -5,6 +5,8 @@ form.addEventListener('submit', (event) => {
 
 	const formData = new FormData(form);
 	const [a, b, c, d] = formData.values().map(Number);
+	document.getElementsByClassName('equation')[0].innerHTML =
+		`${a}x³ ${b >= 0 ? '+' : '-'} ${Math.abs(b)}x² ${c >= 0 ? '+' : '-'} ${Math.abs(c)}x ${d >= 0 ? '+' : '-'} ${Math.abs(d)} = 0`;
 
 	const pElement = document.getElementById('p') as HTMLTableCellElement;
 	const qElement = document.getElementById('q') as HTMLTableCellElement;
@@ -20,9 +22,6 @@ form.addEventListener('submit', (event) => {
 	pElement.innerHTML = p.toString();
 	qElement.innerHTML = q.toString();
 	discriminantElement.innerHTML = discriminant.toString();
-
-	document.getElementsByClassName('equation')[0].innerHTML =
-		`${a}x³ ${b >= 0 ? '+' : '-'} ${Math.abs(b)}x² ${c >= 0 ? '+' : '-'} ${Math.abs(c)}x ${d >= 0 ? '+' : '-'} ${Math.abs(d)} = 0`;
 
 	function cardano(p: number, q: number) {
 		const part = -q / 2;
@@ -50,12 +49,15 @@ form.addEventListener('submit', (event) => {
 		root3Element.innerHTML = x3.toString();
 	} else if (discriminant > 0) {
 		// 1 real, 2 complex
-		console.log(cardano(p, q));
-	} else if (p !== 0) {
-		// 3 real (Double and single root)
-		cardano(p, q);
-	} else {
+		root1Element.innerHTML = cardano(p, q).toString();
+		root2Element.innerHTML = 'Complex Number';
+		root3Element.innerHTML = 'Complex Number';
+	} else if (p === 0 && q === 0) {
 		// 1 real (Triple)
-		cardano(p, q);
+		root1Element.innerHTML = cardano(p, q).toString();
+	} else {
+		// 3 real (Double and single root)
+		root1Element.innerHTML = cardano(p, q).toString();
+		root2Element.innerHTML = (Math.cbrt(q / 2) - b / (3 * a)).toString();
 	}
 });
