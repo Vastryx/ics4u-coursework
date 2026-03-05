@@ -4,6 +4,8 @@ const canvas = document.getElementById('graph') as HTMLCanvasElement;
 const graph = canvas.getContext('2d');
 
 function drawGraph(a: number, b: number, c: number, d: number) {
+	// w600, h400
+
 	// x-axis
 	graph?.moveTo(0, 200);
 	graph?.lineTo(600, 200);
@@ -13,21 +15,6 @@ function drawGraph(a: number, b: number, c: number, d: number) {
 	graph?.moveTo(300, 0);
 	graph?.lineTo(300, 400);
 	graph?.stroke();
-
-	// w600, h400
-
-	graph?.beginPath();
-	graph?.moveTo(0, ((a * -300) ^ 3) + ((b * -300) ^ 2) + c * -300 + d);
-
-	for (let x = -300; x <= 300; x++) {
-		const y = a * x ** 3 + b * x ** 2 + c * x + d;
-		if (y >= 0 && y <= 400) {
-			graph?.lineTo(x + 300, y);
-			console.log(`${x + 300}, ${y}`);
-		}
-	}
-
-	graph?.stroke();
 }
 
 form.addEventListener('submit', (event) => {
@@ -35,6 +22,7 @@ form.addEventListener('submit', (event) => {
 
 	const formData = new FormData(form);
 	const [a, b, c, d] = formData.values().map(Number);
+
 	drawGraph(a, b, c, d);
 	document.getElementsByClassName('equation')[0].innerHTML =
 		`${a}x³ ${b >= 0 ? '+' : '-'} ${Math.abs(b)}x² ${c >= 0 ? '+' : '-'} ${Math.abs(c)}x ${d >= 0 ? '+' : '-'} ${Math.abs(d)} = 0`;
@@ -61,7 +49,7 @@ form.addEventListener('submit', (event) => {
 	}
 
 	function trig(p: number, q: number) {
-		const angle = (1 / 3) * Math.acos(-q / (2 * Math.sqrt(-((p / 3) ** 3))));
+		const angle = Math.acos(-q / (2 * Math.sqrt(-((p / 3) ** 3)))) / 3;
 		const part = 2 * Math.sqrt(-p / 3);
 		const part2 = b / (3 * a);
 
@@ -72,23 +60,29 @@ form.addEventListener('submit', (event) => {
 		return [x1, x2, x3];
 	}
 
-	if (discriminant < 0) {
+	// Account for floating point errors
+	const epsilonValue = Number.EPSILON * 100000000;
+
+	if (discriminant < -epsilonValue) {
 		// 3 real
 		const [x1, x2, x3] = trig(p, q);
 		root1Element.innerHTML = x1.toPrecision(5);
 		root2Element.innerHTML = x2.toPrecision(5);
 		root3Element.innerHTML = x3.toPrecision(5);
-	} else if (discriminant > 0) {
+	} else if (discriminant > epsilonValue) {
 		// 1 real, 2 complex
 		root1Element.innerHTML = cardano(p, q).toPrecision(5);
 		root2Element.innerHTML = 'Complex Number';
 		root3Element.innerHTML = 'Complex Number';
-	} else if (p === 0 && q === 0) {
+	} else if (Math.abs(p) < epsilonValue && Math.abs(q) < epsilonValue) {
 		// 1 real (Triple)
 		root1Element.innerHTML = cardano(p, q).toPrecision(5);
+		root2Element.innerHTML = 'None';
+		root3Element.innerHTML = 'None';
 	} else {
 		// 3 real (Double and single root)
 		root1Element.innerHTML = cardano(p, q).toPrecision(5);
 		root2Element.innerHTML = (Math.cbrt(q / 2) - b / (3 * a)).toPrecision(5);
+		root3Element.innerHTML = 'None';
 	}
 });
