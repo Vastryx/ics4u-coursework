@@ -24,7 +24,7 @@ form.addEventListener('submit', (event) => {
 	const [a, b, c, d] = formData.values().map(Number);
 
 	drawGraph(a, b, c, d);
-	document.getElementsByClassName('equation')[0].innerHTML =
+	(document.getElementById('equation') as HTMLElement).innerHTML =
 		`${a}x³ ${b >= 0 ? '+' : '-'} ${Math.abs(b)}x² ${c >= 0 ? '+' : '-'} ${Math.abs(c)}x ${d >= 0 ? '+' : '-'} ${Math.abs(d)} = 0`;
 
 	const pElement = document.getElementById('p') as HTMLTableCellElement;
