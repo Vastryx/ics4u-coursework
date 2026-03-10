@@ -8,9 +8,11 @@
 		"format": "oxfmt"
 	},
 	"devDependencies": {
+		"@tailwindcss/vite": "^4.2.1",
 		"oxfmt": "^0.34.0",
 		"oxlint": "^1.49.0",
-		"oxlint-tsgolint": "^0.14.1"
+		"oxlint-tsgolint": "^0.14.1",
+		"tailwindcss": "^4.2.1"
 	},
 	"packageManager": "pnpm@10.30.2",
 	"pnpm": {
