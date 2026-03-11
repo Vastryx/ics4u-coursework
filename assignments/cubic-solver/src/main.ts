@@ -23,22 +23,13 @@ function trig(p: number, q: number, a: number, b: number) {
 	return [x1, x2, x3];
 }
 
-function drawGraph(a: number, b: number, c: number, d: number) {
+function drawGraph(a: number, b: number, c: number, d: number, roots: number[]) {
 	if (!graph) return;
 
 	graph.reset();
 
-	// x-axis
-	graph.moveTo(0, canvas.height / 2);
-	graph.lineTo(canvas.width, canvas.height / 2);
-	// y-axis
-	graph.moveTo(canvas.width / 2, 0);
-	graph.lineTo(canvas.width / 2, canvas.height);
-
-	graph.stroke();
-
 	// Coordinate ranges
-	const xMax = 5;
+	const xMax = 10;
 	const xMin = -xMax;
 	const yMax = 10;
 	const yMin = -yMax;
@@ -48,6 +39,35 @@ function drawGraph(a: number, b: number, c: number, d: number) {
 		const py = canvas.height - ((y - yMin) / (yMax - yMin)) * canvas.height;
 		return [px, py];
 	}
+
+	graph.beginPath();
+	graph.strokeStyle = '#e4e4e7';
+	graph.lineWidth = 1;
+
+	for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) {
+		const [px] = toPixel(x, 0);
+		graph.moveTo(px, 0);
+		graph.lineTo(px, canvas.height);
+	}
+
+	for (let y = Math.ceil(yMin); y <= Math.floor(yMax); y++) {
+		const [, py] = toPixel(0, y);
+		graph.moveTo(0, py);
+		graph.lineTo(canvas.width, py);
+	}
+
+	graph.stroke();
+
+	graph.beginPath();
+	graph.strokeStyle = '#52525b';
+	graph.lineWidth = 1.5;
+	// x-axis
+	graph.moveTo(0, canvas.height / 2);
+	graph.lineTo(canvas.width, canvas.height / 2);
+	// y-axis
+	graph.moveTo(canvas.width / 2, 0);
+	graph.lineTo(canvas.width / 2, canvas.height);
+	graph.stroke();
 
 	graph.strokeStyle = 'blue';
 	graph.lineWidth = 2;
@@ -65,6 +85,18 @@ function drawGraph(a: number, b: number, c: number, d: number) {
 	}
 
 	graph.stroke();
+
+	graph.fillStyle = '#dc2626';
+	graph.strokeStyle = '#ffffff';
+	graph.lineWidth = 2;
+
+	for (const root of roots) {
+		const [px, py] = toPixel(root, 0);
+		graph.beginPath();
+		graph.arc(px, py, 6, 0, Math.PI * 2);
+		graph.fill();
+		graph.stroke();
+	}
 }
 
 form.addEventListener('submit', (event) => {
@@ -72,6 +104,8 @@ form.addEventListener('submit', (event) => {
 
 	const formData = new FormData(form);
 	const [a, b, c, d] = formData.values().map(Number);
+
+	if (a === 0) return;
 
 	const terms: [number, string][] = [
 		[a, 'x³'],
@@ -109,29 +143,38 @@ form.addEventListener('submit', (event) => {
 	// Scale tolerance to term with largest magnitude
 	const discriminantTolerance =
 		Number.EPSILON * Math.max(1, Math.abs((q / 2) ** 2), Math.abs((p / 3) ** 3)) * 1024;
+	const roots: number[] = [];
 
 	if (discriminant < -discriminantTolerance) {
 		// 3 real
 		const [x1, x2, x3] = trig(p, q, a, b);
+		roots.push(x1, x2, x3);
 		root1Element.textContent = x1.toPrecision(5);
 		root2Element.textContent = x2.toPrecision(5);
 		root3Element.textContent = x3.toPrecision(5);
 	} else if (discriminant > discriminantTolerance) {
 		// 1 real, 2 complex
-		root1Element.textContent = cardano(p, q, a, b).toPrecision(5);
+		const realRoot = cardano(p, q, a, b);
+		roots.push(realRoot);
+		root1Element.textContent = realRoot.toPrecision(5);
 		root2Element.textContent = 'Complex Number';
 		root3Element.textContent = 'Complex Number';
 	} else if (Math.abs(p) < discriminantTolerance && Math.abs(q) < discriminantTolerance) {
 		// 1 real (Triple)
-		root1Element.textContent = cardano(p, q, a, b).toPrecision(5);
+		const tripleRoot = cardano(p, q, a, b);
+		roots.push(tripleRoot);
+		root1Element.textContent = tripleRoot.toPrecision(5);
 		root2Element.textContent = 'None';
 		root3Element.textContent = 'None';
 	} else {
 		// 3 real (Double and single root)
-		root1Element.textContent = cardano(p, q, a, b).toPrecision(5);
-		root2Element.textContent = (Math.cbrt(q / 2) - b / (3 * a)).toPrecision(5);
+		const repeatedRoot = cardano(p, q, a, b);
+		const singleRoot = Math.cbrt(q / 2) - b / (3 * a);
+		roots.push(repeatedRoot, singleRoot);
+		root1Element.textContent = repeatedRoot.toPrecision(5);
+		root2Element.textContent = singleRoot.toPrecision(5);
 		root3Element.textContent = 'None';
 	}
 
-	drawGraph(a, b, c, d);
+	drawGraph(a, b, c, d, roots);
 });

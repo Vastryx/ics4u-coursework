@@ -1,15 +1,12 @@
-:root {
-	font-family: system-ui, sans-serif;
-}
-
 * {
+	font-family: system-ui, sans-serif;
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 }
 
 body {
-	max-width: 70rem;
+	max-width: 75rem;
 	margin: auto;
 	padding: 2rem;
 }
@@ -24,17 +21,21 @@ h1 {
 .bottom {
 	padding: 1.5rem;
 	border: 1px solid #d9d9d9;
-	border-radius: 14px;
+	border-radius: 12px;
 }
 
 .bottom {
 	margin-top: 1rem;
 }
 
-form,
-.answer {
+form {
 	display: flex;
 	gap: 1rem;
+}
+
+.answer {
+	display: flex;
+	gap: 3rem;
 }
 
 form > div {
@@ -42,7 +43,6 @@ form > div {
 	flex: 1 1 12rem;
 	flex-direction: column;
 	gap: 0.4rem;
-	min-width: 0;
 }
 
 input {
@@ -50,7 +50,7 @@ input {
 	width: 100%;
 	padding: 0.75rem 0.9rem;
 	border: 1px solid #c8c8c8;
-	border-radius: 10px;
+	border-radius: 12px;
 	background: #fff;
 }
 
@@ -77,14 +77,12 @@ input[type='submit'] {
 
 .answer {
 	align-items: flex-start;
-	justify-content: space-between;
 	flex-wrap: wrap;
 }
 
 table {
 	border-collapse: collapse;
 	min-width: 18rem;
-	background: #fff;
 }
 
 th,
@@ -96,7 +94,6 @@ td {
 
 th {
 	font-weight: 600;
-	white-space: nowrap;
 }
 
 canvas {
