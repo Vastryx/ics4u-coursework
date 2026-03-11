@@ -4,7 +4,10 @@ const graph = canvas.getContext('2d');
 
 function cardano(p: number, q: number, a: number, b: number) {
 	const part = -q / 2;
-	const part2 = Math.sqrt((q / 2) ** 2 + (p / 3) ** 3);
+	const discriminant = (q / 2) ** 2 + (p / 3) ** 3;
+	// Account for floating point errors
+	// Clamp to 0 to avoid negative square root
+	const part2 = Math.sqrt(Math.max(discriminant, 0));
 	return Math.cbrt(part + part2) + Math.cbrt(part - part2) - b / (3 * a);
 }
 
@@ -76,10 +79,8 @@ form.addEventListener('submit', (event) => {
 		[c, 'x'],
 		[d, ''],
 	];
-
 	const term = (coeff: number, value: string) =>
 		`${coeff > 0 ? '+ ' : '- '}${value && Math.abs(coeff) === 1 ? value : Math.abs(coeff) + value}`;
-
 	const equation = terms
 		.filter(([coeff]) => coeff !== 0)
 		.map(([coeff, value], i) =>
@@ -105,20 +106,22 @@ form.addEventListener('submit', (event) => {
 	discriminantElement.textContent = discriminant.toPrecision(5);
 
 	// Account for floating point errors
-	const epsilonValue = Number.EPSILON * 1000;
+	// Scale tolerance to term with largest magnitude
+	const discriminantTolerance =
+		Number.EPSILON * Math.max(1, Math.abs((q / 2) ** 2), Math.abs((p / 3) ** 3)) * 1024;
 
-	if (discriminant < -epsilonValue) {
+	if (discriminant < -discriminantTolerance) {
 		// 3 real
 		const [x1, x2, x3] = trig(p, q, a, b);
 		root1Element.textContent = x1.toPrecision(5);
 		root2Element.textContent = x2.toPrecision(5);
 		root3Element.textContent = x3.toPrecision(5);
-	} else if (discriminant > epsilonValue) {
+	} else if (discriminant > discriminantTolerance) {
 		// 1 real, 2 complex
 		root1Element.textContent = cardano(p, q, a, b).toPrecision(5);
 		root2Element.textContent = 'Complex Number';
 		root3Element.textContent = 'Complex Number';
-	} else if (Math.abs(p) < epsilonValue && Math.abs(q) < epsilonValue) {
+	} else if (Math.abs(p) < discriminantTolerance && Math.abs(q) < discriminantTolerance) {
 		// 1 real (Triple)
 		root1Element.textContent = cardano(p, q, a, b).toPrecision(5);
 		root2Element.textContent = 'None';
