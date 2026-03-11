@@ -1,6 +1,7 @@
-import { CubicInput } from './components/CubicInput';
-import { CubicEquation } from './components/CubicEquation';
 import { useState } from 'react';
+
+import { CubicEquation } from './components/CubicEquation';
+import { CubicInput } from './components/CubicInput';
 import type { CoefficientsType } from './types';
 
 export function App() {
@@ -9,11 +10,11 @@ export function App() {
 	console.log(coefficients);
 
 	return (
-		<div className="m-auto p-8 max-w-4/5">
-			<div className="p-6 border border-gray-300 rounded-2xl">
+		<div className="m-auto max-w-4/5 p-8">
+			<div className="rounded-2xl border border-gray-300 p-6">
 				<CubicInput set={setcoefficients} />
 			</div>
-			<div className="p-6 border border-gray-300 rounded-2xl mt-4">
+			<div className="mt-4 rounded-2xl border border-gray-300 p-6">
 				<CubicEquation />
 			</div>
 		</div>

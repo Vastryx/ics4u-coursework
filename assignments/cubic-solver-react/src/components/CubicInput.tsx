@@ -17,26 +17,26 @@ export function CubicInput({ set }: CubicInputProps) {
 
 	return (
 		<>
-			<h1 className="font-semibold text-4xl">Cubic Solver</h1>
+			<h1 className="text-4xl font-semibold">Cubic Solver</h1>
 			<form className="flex gap-4" action={handleSubmit}>
-				<div className="flex gap-1.5 flex-col grow shrink basis-3xs">
+				<div className="flex shrink grow basis-3xs flex-col gap-1.5">
 					<label htmlFor="a">a value:</label>
-					<input className="w-full px-3 border rounded-lg" type="number" name="a" required />
+					<input className="w-full rounded-lg border px-3" type="number" name="a" required />
 				</div>
-				<div className="flex gap-1.5 flex-col grow shrink basis-3xs">
+				<div className="flex shrink grow basis-3xs flex-col gap-1.5">
 					<label htmlFor="b">b value:</label>
-					<input className="w-full px-3 border rounded-lg" type="number" name="b" required />
+					<input className="w-full rounded-lg border px-3" type="number" name="b" required />
 				</div>
-				<div className="flex gap-1.5 flex-col grow shrink basis-3xs">
+				<div className="flex shrink grow basis-3xs flex-col gap-1.5">
 					<label htmlFor="c">c value:</label>
-					<input className="w-full px-3 border rounded-lg" type="number" name="c" required />
+					<input className="w-full rounded-lg border px-3" type="number" name="c" required />
 				</div>
-				<div className="flex gap-1.5 flex-col grow shrink basis-3xs">
+				<div className="flex shrink grow basis-3xs flex-col gap-1.5">
 					<label htmlFor="d">d value:</label>
-					<input className="w-full px-3 border rounded-lg" type="number" required />
+					<input className="w-full rounded-lg border px-3" type="number" required />
 				</div>
 				<input
-					className="flex grow-0 shrink-0 w-auto font-semibold border-gray-900 border cursor-pointer px-5 rounded-lg"
+					className="flex w-auto shrink-0 grow-0 cursor-pointer rounded-lg border border-gray-900 px-5 font-semibold"
 					type="submit"
 					value="Solve Cubic"
 				/>

@@ -87,14 +87,11 @@ form.addEventListener('submit', (event) => {
 		)
 		.join(' ');
 
-	(document.getElementById('equation') as HTMLElement).textContent =
-		`${equation} = 0`;
+	(document.getElementById('equation') as HTMLElement).textContent = `${equation} = 0`;
 
 	const pElement = document.getElementById('p') as HTMLTableCellElement;
 	const qElement = document.getElementById('q') as HTMLTableCellElement;
-	const discriminantElement = document.getElementById(
-		'discriminant',
-	) as HTMLTableCellElement;
+	const discriminantElement = document.getElementById('discriminant') as HTMLTableCellElement;
 	const root1Element = document.getElementById('root1') as HTMLTableCellElement;
 	const root2Element = document.getElementById('root2') as HTMLTableCellElement;
 	const root3Element = document.getElementById('root3') as HTMLTableCellElement;
