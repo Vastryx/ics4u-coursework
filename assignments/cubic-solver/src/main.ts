@@ -105,7 +105,9 @@ form.addEventListener('submit', (event) => {
 	const formData = new FormData(form);
 	const [a, b, c, d] = formData.values().map(Number);
 
-	if (a === 0) return;
+	if (a === 0) {
+		return;
+	}
 
 	const terms: [number, string][] = [
 		[a, 'x³'],
@@ -164,16 +166,16 @@ form.addEventListener('submit', (event) => {
 		const tripleRoot = cardano(p, q, a, b);
 		roots.push(tripleRoot);
 		root1Element.textContent = tripleRoot.toPrecision(5);
-		root2Element.textContent = 'None';
-		root3Element.textContent = 'None';
+		root2Element.textContent = tripleRoot.toPrecision(5);
+		root3Element.textContent = tripleRoot.toPrecision(5);
 	} else {
 		// 3 real (Double and single root)
 		const repeatedRoot = cardano(p, q, a, b);
 		const singleRoot = Math.cbrt(q / 2) - b / (3 * a);
 		roots.push(repeatedRoot, singleRoot);
-		root1Element.textContent = repeatedRoot.toPrecision(5);
-		root2Element.textContent = singleRoot.toPrecision(5);
-		root3Element.textContent = 'None';
+		root1Element.textContent = singleRoot.toPrecision(5);
+		root2Element.textContent = repeatedRoot.toPrecision(5);
+		root3Element.textContent = repeatedRoot.toPrecision(5);
 	}
 
 	drawGraph(a, b, c, d, roots);
