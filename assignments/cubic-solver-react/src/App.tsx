@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
 import { CubicEquation } from './components/CubicEquation';
+import { CubicGraph } from './components/CubicGraph';
 import { CubicInput } from './components/CubicInput';
+import { CubicTable } from './components/CubicTable';
 import type { CoefficientsType } from './types';
 
 export function App() {
@@ -16,6 +18,10 @@ export function App() {
 			</div>
 			<div className="mt-4 rounded-2xl border border-gray-300 p-6">
 				<CubicEquation />
+				<div>
+					<CubicTable />
+					<CubicGraph />
+				</div>
 			</div>
 		</div>
 	);
