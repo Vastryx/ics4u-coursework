@@ -1,6 +1,6 @@
 export type CoefficientsType = {
-	a: number | null;
-	b: number | null;
-	c: number | null;
-	d: number | null;
+	a: number | undefined;
+	b: number | undefined;
+	c: number | undefined;
+	d: number | undefined;
 };

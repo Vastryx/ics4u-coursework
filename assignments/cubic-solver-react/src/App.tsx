@@ -7,18 +7,21 @@ import { CubicTable } from './components/CubicTable';
 import type { CoefficientsType } from './types';
 
 export function App() {
-	const [coefficients, setcoefficients] = useState<CoefficientsType>();
-
-	function handleSubmit(name: string, value: number) {}
+	const [coefficients, setCoefficients] = useState<CoefficientsType>({
+		a: undefined,
+		b: undefined,
+		c: undefined,
+		d: undefined,
+	});
 
 	return (
 		<div className="m-auto max-w-4/5 p-8">
 			<div className="rounded-2xl border border-gray-300 p-6">
-				<CubicInput handler={handleSubmit} />
+				<CubicInput coefficients={coefficients} setCoefficients={setCoefficients} />
 			</div>
 			<div className="mt-4 rounded-2xl border border-gray-300 p-6">
-				<CubicEquation />
-				<div>
+				<CubicEquation coefficients={coefficients} />
+				<div className="flex">
 					<CubicTable />
 					<CubicGraph />
 				</div>
