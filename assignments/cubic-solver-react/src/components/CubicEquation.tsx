@@ -1,10 +1,6 @@
 import type { CoefficientsType } from '../types';
 
-type CubicInputProps = {
-	coefficients: CoefficientsType;
-};
-
-export function CubicEquation({ coefficients }: CubicInputProps) {
+export function CubicEquation({ coefficients }: { coefficients: CoefficientsType }) {
 	if (!coefficients.a || !coefficients.b || !coefficients.c || !coefficients.d) {
 		return;
 	}

@@ -1,4 +1,4 @@
-export function CubicTable() {
+export function CubicTable({ p, q, roots }: { p: number; q: number; roots: number[] }) {
 	return (
 		<table>
 			<tbody>
