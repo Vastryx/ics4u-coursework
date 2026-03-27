@@ -36,12 +36,15 @@ export function App() {
 	}
 
 	const roots: number[] = [];
+	let p = 0;
+	let q = 0;
+	let discriminant = 0;
+	const { a, b, c, d } = coefficients;
 
-	if (coefficients.a && coefficients.b && coefficients.c && coefficients.d) {
-		const { a, b, c, d } = coefficients;
-		const p = (3 * a * c - b ** 2) / (3 * a ** 2);
-		const q = (27 * a ** 2 * d - 9 * a * b * c + 2 * b ** 3) / (27 * a ** 3);
-		const discriminant = (q / 2) ** 2 + (p / 3) ** 3;
+	if (a != undefined && b != undefined && c != undefined && d != undefined) {
+		p = (3 * a * c - b ** 2) / (3 * a ** 2);
+		q = (27 * a ** 2 * d - 9 * a * b * c + 2 * b ** 3) / (27 * a ** 3);
+		discriminant = (q / 2) ** 2 + (p / 3) ** 3;
 
 		// Account for floating point errors
 		// Scale tolerance to term with largest magnitude
@@ -76,8 +79,8 @@ export function App() {
 			<div className="mt-4 rounded-2xl border border-gray-300 p-6">
 				<CubicEquation coefficients={coefficients} />
 				<div className="flex">
-					<CubicTable p={p} q={q} roots={roots} />
-					<CubicGraph />
+					<CubicTable p={p} q={q} discriminant={discriminant} roots={roots} />
+					<CubicGraph a={a} b={b} c={c} d={d} roots={roots} />
 				</div>
 			</div>
 		</div>

@@ -1,7 +1,12 @@
 import type { CoefficientsType } from '../types';
 
 export function CubicEquation({ coefficients }: { coefficients: CoefficientsType }) {
-	if (!coefficients.a || !coefficients.b || !coefficients.c || !coefficients.d) {
+	if (
+		coefficients.a == undefined ||
+		coefficients.b == undefined ||
+		coefficients.c == undefined ||
+		coefficients.d == undefined
+	) {
 		return;
 	}
 
