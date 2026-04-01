@@ -80,7 +80,7 @@ export function App() {
 				<CubicEquation coefficients={coefficients} />
 				<div className="flex">
 					<CubicTable p={p} q={q} discriminant={discriminant} roots={roots} />
-					<CubicGraph a={a} b={b} c={c} d={d} roots={roots} />
+					{/* <CubicGraph a={a} b={b} c={c} d={d} roots={roots} /> */}
 				</div>
 			</div>
 		</div>
