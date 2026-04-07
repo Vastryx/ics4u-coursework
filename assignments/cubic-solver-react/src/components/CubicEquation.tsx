@@ -1,6 +1,8 @@
 import type { CoefficientsType } from '../types';
 
-export function CubicEquation({ coefficients }: { coefficients: CoefficientsType }) {
+type CubicEquationProps = { coefficients: CoefficientsType };
+
+export function CubicEquation({ coefficients }: CubicEquationProps) {
 	const terms: [number, string][] = [
 		[coefficients.a, 'x³'],
 		[coefficients.b, 'x²'],

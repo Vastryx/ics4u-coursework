@@ -1,18 +1,14 @@
 import { useEffect, useRef } from 'react';
 
-export function CubicGraph({
-	a,
-	b,
-	c,
-	d,
-	roots,
-}: {
+type CubicGraphProps = {
 	a: number;
 	b: number;
 	c: number;
 	d: number;
 	roots: (number | null)[];
-}) {
+};
+
+export function CubicGraph({ a, b, c, d, roots }: CubicGraphProps) {
 	const canvas = useRef(null);
 
 	function drawGraph(
@@ -114,7 +110,7 @@ export function CubicGraph({
 				canvas.current,
 			);
 		}
-	});
+	}, [a, b, c, d]);
 
 	return (
 		<canvas

@@ -1,14 +1,11 @@
-export function CubicTable({
-	p,
-	q,
-	discriminant,
-	roots,
-}: {
+type CubicTableProps = {
 	p: number;
 	q: number;
 	discriminant: number;
 	roots: (number | null)[];
-}) {
+};
+
+export function CubicTable({ p, q, discriminant, roots }: CubicTableProps) {
 	const formatRoot = (root: number | null) => {
 		if (root === null) {
 			return 'Complex Root';
