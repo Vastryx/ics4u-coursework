@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 export function CubicGraph({
 	a,
@@ -11,7 +11,7 @@ export function CubicGraph({
 	b: number;
 	c: number;
 	d: number;
-	roots: number[];
+	roots: (number | null)[];
 }) {
 	const canvas = useRef(null);
 
@@ -73,6 +73,10 @@ export function CubicGraph({
 		graph.lineWidth = 2;
 		graph.beginPath();
 
+		if (a === 0) {
+			return;
+		}
+
 		for (let px = 0; px <= canvas.width; px++) {
 			const x = xMin + (px / canvas.width) * (xMax - xMin);
 			const y = a * x ** 3 + b * x ** 2 + c * x + d;
@@ -99,9 +103,26 @@ export function CubicGraph({
 		}
 	}
 
-	if (canvas.current != null) {
-		drawGraph(a, b, c, d, roots, canvas.current);
-	}
+	useEffect(() => {
+		if (canvas.current != null) {
+			drawGraph(
+				a,
+				b,
+				c,
+				d,
+				roots.filter((root) => root !== null),
+				canvas.current,
+			);
+		}
+	});
 
-	return <canvas ref={canvas} id="graph" width="600" height="400"></canvas>;
+	return (
+		<canvas
+			ref={canvas}
+			id="graph"
+			width="600"
+			height="520"
+			className="h-auto w-full max-w-full rounded-xl border border-gray-300 md:w-auto"
+		></canvas>
+	);
 }

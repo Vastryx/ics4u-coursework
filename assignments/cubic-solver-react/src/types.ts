@@ -1,6 +1,8 @@
 export type CoefficientsType = {
-	a: number | undefined;
-	b: number | undefined;
-	c: number | undefined;
-	d: number | undefined;
+	a: number;
+	b: number;
+	c: number;
+	d: number;
 };
+
+export const fields = ['a', 'b', 'c', 'd'] as const;
