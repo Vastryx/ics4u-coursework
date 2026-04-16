@@ -110,7 +110,7 @@ export function CubicGraph({ a, b, c, d, roots }: CubicGraphProps) {
 				canvas.current,
 			);
 		}
-	}, [a, b, c, d]);
+	}, [a, b, c, d, roots]);
 
 	return (
 		<canvas
