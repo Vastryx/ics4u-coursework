@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { ButtonGroup, ImageGrid, Pagination } from '@/components';
 import { TRENDING_ENDPOINT } from '@/core/constants';
-import type { MediaResponse } from '@/core/types';
+import type { MoviesResponse } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
 export const TrendingView = () => {
@@ -11,8 +11,7 @@ export const TrendingView = () => {
 	const [page, setPage] = useState<number>(1);
 	const [searchParams, setSearchParams] = useSearchParams();
 	const interval = searchParams.get('interval') || 'day';
-
-	const { data } = useTmdb<MediaResponse>(
+	const { data } = useTmdb<MoviesResponse>(
 		`${TRENDING_ENDPOINT}/${interval}`,
 		{ page, time_window: interval },
 		[page, interval],
@@ -38,9 +37,7 @@ export const TrendingView = () => {
 						{ label: 'Today', value: 'day' },
 						{ label: 'Week', value: 'week' },
 					]}
-					onClick={(value) => {
-						setSearchParams({ interval: value });
-					}}
+					onClick={(value) => setSearchParams({ interval: value })}
 				/>
 			</div>
 			<ImageGrid results={gridData} onClick={(id) => navigate(`/movie/${id}/credits`)} />

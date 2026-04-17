@@ -14,15 +14,15 @@ export const SearchView = () => {
 		page,
 	]);
 
+	useEffect(() => {
+		setPage(1);
+	}, [debouncedQuery]);
+
 	const gridData = (data?.results ?? []).map((result) => ({
 		id: result.id,
 		imagePath: result.profile_path,
 		primaryText: result.name,
 	}));
-
-	useEffect(() => {
-		setPage(1);
-	}, [debouncedQuery]);
 
 	if (!data) {
 		return <p className="text-center text-gray-400">Loading...</p>;
@@ -31,11 +31,9 @@ export const SearchView = () => {
 	return (
 		<section className="mx-auto max-w-[1200px] space-y-5 p-10">
 			<SearchBar value={query} onChange={setQuery} />
+			<ImageGrid results={gridData} />
 			{data.results.length ? (
-				<>
-					<ImageGrid results={gridData} />
-					<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
-				</>
+				<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
 			) : (
 				<p className="text-center text-gray-400">No search results found</p>
 			)}

@@ -23,10 +23,10 @@ export const CreditsView = () => {
 	return (
 		<section className="px-2">
 			<h2 className="mb-6 text-2xl font-bold">Credits</h2>
-			{!data.cast.length ? (
-				<p className="text-center text-gray-400">No credits available.</p>
-			) : (
+			{data.cast.length ? (
 				<ImageGrid results={gridData} />
+			) : (
+				<p className="text-center text-gray-400">No credits available.</p>
 			)}
 		</section>
 	);

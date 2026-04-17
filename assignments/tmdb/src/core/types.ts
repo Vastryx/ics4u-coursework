@@ -1,26 +1,10 @@
-export type GridData = {
-	id: number;
-	imagePath: string | null;
-	primaryText: string;
-	secondaryText?: string;
-};
-
-export type MediaResponse = {
+export type MoviesResponse = {
 	results: Array<{
 		id: number;
 		original_title: string;
 		poster_path: string;
 	}>;
 	total_pages: number;
-};
-
-export type CreditsResponse = {
-	cast: Array<{
-		id: number;
-		name: string;
-		profile_path: string | null;
-		character: string;
-	}>;
 };
 
 export type MovieRepsonse = {
@@ -39,6 +23,15 @@ export type MovieRepsonse = {
 			type: string;
 		}>;
 	};
+};
+
+export type CreditsResponse = {
+	cast: Array<{
+		id: number;
+		name: string;
+		profile_path: string | null;
+		character: string;
+	}>;
 };
 
 export type ReviewsResponse = {

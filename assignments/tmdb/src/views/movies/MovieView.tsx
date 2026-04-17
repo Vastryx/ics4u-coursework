@@ -9,7 +9,6 @@ import { useTmdb } from '@/hooks';
 export const MovieView = () => {
 	const navigate = useNavigate();
 	const { id } = useParams();
-
 	const { data } = useTmdb<MovieRepsonse>(
 		`${MOVIE_ENDPOINT}/${id}`,
 		{ append_to_response: 'videos' },
@@ -27,7 +26,7 @@ export const MovieView = () => {
 	}
 
 	return (
-		<Modal isOpen={!!id} onClose={() => navigate(-1)}>
+		<Modal onClose={() => navigate(-1)}>
 			<div className="space-y-6 p-6">
 				<div
 					className="h-[420px] rounded-2xl bg-cover bg-center"

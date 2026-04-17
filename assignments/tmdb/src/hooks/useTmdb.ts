@@ -25,7 +25,7 @@ export function useTmdb<T>(url: string, params: Record<string, any>, deps: any[]
 			}
 		};
 
-		fetchData();
+		void fetchData();
 
 		return () => controller.abort();
 	}, deps);
