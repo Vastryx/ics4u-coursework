@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-import { API_KEY } from '@/core/constants';
-
-export function useTmdb<T>(url: string, params: Record<string, any>, deps: any[]) {
+export function useTmdb<T>(path: string, params: Record<string, any>, deps: any[]) {
 	const [data, setData] = useState<T | null>(null);
 
 	useEffect(() => {
@@ -11,9 +9,13 @@ export function useTmdb<T>(url: string, params: Record<string, any>, deps: any[]
 
 		const fetchData = async () => {
 			try {
-				const response = await axios.get<T>(url, {
+				const response = await axios.get<T>(path, {
+					baseURL: 'https://api.themoviedb.org/3',
+					auth: null,
+					headers: {
+						Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+					},
 					params: {
-						api_key: API_KEY,
 						...params,
 					},
 					signal: controller.signal,

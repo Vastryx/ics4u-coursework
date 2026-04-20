@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { ImageGrid, Pagination, SearchBar } from '@/components';
-import { SEARCH_ENDPOINT } from '@/core/constants';
 import type { SearchResponse } from '@/core/types';
 import { useDebounce, useTmdb } from '@/hooks';
 
@@ -9,7 +8,7 @@ export const SearchView = () => {
 	const [query, setQuery] = useState('');
 	const [page, setPage] = useState<number>(1);
 	const debouncedQuery = useDebounce(query, 500);
-	const { data } = useTmdb<SearchResponse>(SEARCH_ENDPOINT, { query: debouncedQuery, page }, [
+	const { data } = useTmdb<SearchResponse>('search/person', { query: debouncedQuery, page }, [
 		debouncedQuery,
 		page,
 	]);

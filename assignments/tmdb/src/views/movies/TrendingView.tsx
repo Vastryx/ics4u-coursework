@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { ButtonGroup, ImageGrid, Pagination } from '@/components';
-import { TRENDING_ENDPOINT } from '@/core/constants';
 import type { MoviesResponse } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
@@ -12,7 +11,7 @@ export const TrendingView = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const interval = searchParams.get('interval') || 'day';
 	const { data } = useTmdb<MoviesResponse>(
-		`${TRENDING_ENDPOINT}/${interval}`,
+		`trending/movie/${interval}`,
 		{ page, time_window: interval },
 		[page, interval],
 	);
@@ -28,7 +27,7 @@ export const TrendingView = () => {
 	}
 
 	return (
-		<section className="mx-auto max-w-[1200px] space-y-5 p-5">
+		<section className="mx-auto max-w-300 space-y-5 p-5">
 			<div className="mb-4 flex items-center justify-between">
 				<h1 className="text-3xl font-bold">Now Playing</h1>
 				<ButtonGroup

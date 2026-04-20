@@ -17,12 +17,14 @@ export const App = () => {
 		<Routes>
 			<Route path="/" element={<HomeView />} />
 			<Route element={<MainLayout />}>
-				<Route path="/now-playing" element={<NowPlayingView />} />
-				<Route path="/trending" element={<TrendingView />} />
-				<Route path="/search" element={<SearchView />} />
-				<Route path="/movie/:id" element={<MovieView />}>
-					<Route path="credits" element={<CreditsView />} />
-					<Route path="reviews" element={<ReviewsView />} />
+				<Route path="movies">
+					<Route path="now-playing" element={<NowPlayingView />} />
+					<Route path="trending" element={<TrendingView />} />
+					<Route path="search" element={<SearchView />} />
+					<Route path=":id" element={<MovieView />}>
+						<Route path="credits" element={<CreditsView />} />
+						<Route path="reviews" element={<ReviewsView />} />
+					</Route>
 				</Route>
 			</Route>
 			<Route path="*" element={<ErrorView />} />
