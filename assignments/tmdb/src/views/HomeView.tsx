@@ -12,7 +12,7 @@ export const HomeView = () => {
 				<p className="text-lg text-gray-400">
 					Explore movies and discover people using a fast, modern interface.
 				</p>
-				<Button onClick={() => navigate('/now-playing')}>Enter</Button>
+				<Button onClick={() => navigate('movies/category/now-playing')}>Enter</Button>
 				<footer className="pt-10 text-sm text-gray-500">
 					Built with React, Vite and React Router
 				</footer>
