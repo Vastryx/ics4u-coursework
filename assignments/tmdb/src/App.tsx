@@ -24,9 +24,8 @@ export const App = () => {
 				<Route path="tv/category">
 					<Route path=":category" element={<TelevisionView />} />
 				</Route>
-				<Route path="trending/movies">
-					<Route path="movies" element={<NowPlayingView />} />
-					<Route path="tv" element={<NowPlayingView />} />
+				<Route path="trending">
+					<Route path=":category" element={<TrendingView />} />
 				</Route>
 				<Route path="genre">
 					<Route path="movies">

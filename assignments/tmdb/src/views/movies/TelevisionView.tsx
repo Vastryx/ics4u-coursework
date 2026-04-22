@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { ImageGrid, Link, Pagination } from '@/components';
-import type { tvResponse } from '@/core/types';
+import type { TvResponse } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
 export const TelevisionView = () => {
 	const navigate = useNavigate();
 	const { category } = useParams();
 	const [page, setPage] = useState<number>(1);
-	const { data } = useTmdb<tvResponse>(`tv/${category.replace('-', '_')}`, { page }, [
+	const { data } = useTmdb<TvResponse>(`tv/${category.replaceAll('-', '_')}`, { page }, [
 		page,
 		category,
 	]);
