@@ -1,7 +1,8 @@
-export type MoviesResponse = {
+export type Response = {
 	results: Array<{
 		id: number;
-		original_title: string;
+		original_title?: string;
+		original_name?: string;
 		poster_path: string;
 	}>;
 	total_pages: number;
@@ -23,15 +24,6 @@ export type MovieRepsonse = {
 			type: string;
 		}>;
 	};
-};
-
-export type TvResponse = {
-	results: Array<{
-		id: number;
-		original_title: string;
-		poster_path: string;
-	}>;
-	total_pages: number;
 };
 
 export type CreditsResponse = {

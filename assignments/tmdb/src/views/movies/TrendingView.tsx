@@ -3,7 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { ButtonGroup, ImageGrid, Pagination } from '@/components';
 import { Link } from '@/components';
-import type { MoviesResponse } from '@/core/types';
+import type { Response } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
 export const TrendingView = () => {
@@ -12,16 +12,16 @@ export const TrendingView = () => {
 	const [page, setPage] = useState<number>(1);
 	const [searchParams, setSearchParams] = useSearchParams();
 	const interval = searchParams.get('interval') || 'day';
-	const { data } = useTmdb<MoviesResponse>(
-		`trending/${category}/${interval}`,
+	const { data } = useTmdb<Response>(
+		`trending/${category.replace('movies', 'movie')}/${interval}`,
 		{ page, time_window: interval },
-		[page, interval],
+		[page, interval, category],
 	);
 
 	const gridData = (data?.results ?? []).map((result) => ({
 		id: result.id,
 		imagePath: result.poster_path,
-		primaryText: result.original_title,
+		primaryText: result.original_title || result.original_name,
 	}));
 
 	if (!data) {
@@ -33,8 +33,7 @@ export const TrendingView = () => {
 			<Link to="/trending/movies">Movies</Link>
 			<Link to="/trending/tv">TV</Link>
 			<section className="mx-auto max-w-300 space-y-5 p-5">
-				<div className="mb-4 flex items-center justify-between">
-					<h1 className="text-3xl font-bold">Now Playing</h1>
+				<div className="mb-4 flex justify-end">
 					<ButtonGroup
 						value={interval}
 						options={[

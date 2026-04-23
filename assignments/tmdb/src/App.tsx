@@ -6,12 +6,14 @@ import {
 	ErrorView,
 	HomeView,
 	MovieView,
-	NowPlayingView,
+	MoviesView,
 	ReviewsView,
 	SearchView,
 	TelevisionView,
 	TrendingView,
 } from '@/views';
+
+import { GenreView } from './views/movies/GenreView';
 
 export const App = () => {
 	return (
@@ -19,7 +21,7 @@ export const App = () => {
 			<Route path="/" element={<HomeView />} />
 			<Route element={<MainLayout />}>
 				<Route path="movies/category">
-					<Route path=":category" element={<NowPlayingView />} />
+					<Route path=":category" element={<MoviesView />} />
 				</Route>
 				<Route path="tv/category">
 					<Route path=":category" element={<TelevisionView />} />
@@ -28,22 +30,7 @@ export const App = () => {
 					<Route path=":category" element={<TrendingView />} />
 				</Route>
 				<Route path="genre">
-					<Route path="movies">
-						<Route path="action" element={<NowPlayingView />} />
-						<Route path="adventure" element={<NowPlayingView />} />
-						<Route path="animation" element={<NowPlayingView />} />
-						<Route path="crime" element={<NowPlayingView />} />
-						<Route path="family" element={<NowPlayingView />} />
-						<Route path="fantasy" element={<NowPlayingView />} />
-						<Route path="history" element={<NowPlayingView />} />
-						<Route path="horror" element={<NowPlayingView />} />
-						<Route path="mystery" element={<NowPlayingView />} />
-						<Route path="sci-fi" element={<NowPlayingView />} />
-					</Route>
-					<Route path="tv">
-						<Route path="movies" element={<NowPlayingView />} />
-						<Route path="tv" element={<NowPlayingView />} />
-					</Route>
+					<Route path=":category/:genre" element={<GenreView />} />
 				</Route>
 				<Route path=":id" element={<MovieView />}>
 					<Route path="credits" element={<CreditsView />} />
