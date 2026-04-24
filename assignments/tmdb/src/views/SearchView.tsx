@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-import { ImageGrid, Pagination, SearchBar } from '@/components';
+import { ImageGrid, Pagination } from '@/components';
 import type { SearchResponse } from '@/core/types';
 import { useDebounce, useTmdb } from '@/hooks';
 
 export const SearchView = () => {
-	const [query, setQuery] = useState('');
 	const [page, setPage] = useState<number>(1);
+	const [searchParams, setSearchParams] = useSearchParams();
+	const query = searchParams.get('q');
 	const debouncedQuery = useDebounce(query, 500);
 	const { data } = useTmdb<SearchResponse>('search/person', { query: debouncedQuery, page }, [
 		debouncedQuery,
@@ -29,7 +31,6 @@ export const SearchView = () => {
 
 	return (
 		<section className="mx-auto max-w-300 space-y-5 p-10">
-			<SearchBar value={query} onChange={setQuery} />
 			<ImageGrid results={gridData} />
 			{data.results.length ? (
 				<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />

@@ -29,23 +29,23 @@ export const TrendingView = () => {
 	}
 
 	return (
-		<>
-			<Link to="/trending/movies">Movies</Link>
-			<Link to="/trending/tv">TV</Link>
-			<section className="mx-auto max-w-300 space-y-5 p-5">
-				<div className="mb-4 flex justify-end">
-					<ButtonGroup
-						value={interval}
-						options={[
-							{ label: 'Today', value: 'day' },
-							{ label: 'Week', value: 'week' },
-						]}
-						onClick={(value) => setSearchParams({ interval: value })}
-					/>
+		<section className="mx-auto max-w-300 space-y-5 p-5">
+			<div className="mb-4 flex items-center">
+				<div className="mr-auto flex gap-3">
+					<Link to="/trending/movies">Movies</Link>
+					<Link to="/trending/tv">TV</Link>
 				</div>
-				<ImageGrid results={gridData} onClick={(id) => navigate(`/movie/${id}/credits`)} />
-				<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
-			</section>
-		</>
+				<ButtonGroup
+					value={interval}
+					options={[
+						{ label: 'Today', value: 'day' },
+						{ label: 'Week', value: 'week' },
+					]}
+					onClick={(value) => setSearchParams({ interval: value })}
+				/>
+			</div>
+			<ImageGrid results={gridData} onClick={(id) => navigate(`/movie/${id}/credits`)} />
+			<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
+		</section>
 	);
 };

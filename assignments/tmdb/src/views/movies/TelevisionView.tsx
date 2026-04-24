@@ -25,15 +25,15 @@ export const TelevisionView = () => {
 	}
 
 	return (
-		<>
-			<Link to="/tv/category/airing-today">Airing Today</Link>
-			<Link to="/tv/category/on-the-air">On The Air</Link>
-			<Link to="/tv/category/popular">Popular</Link>
-			<Link to="/tv/category/top-rated">Top Rated</Link>
-			<section className="mx-auto max-w-300 space-y-5 p-5">
-				<ImageGrid results={gridData} onClick={(id) => navigate(`/movie/${id}/credits`)} />
-				<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
-			</section>
-		</>
+		<section className="mx-auto max-w-300 space-y-5 p-5">
+			<div className="flex gap-6">
+				<Link to="/tv/category/airing-today">Airing Today</Link>
+				<Link to="/tv/category/on-the-air">On The Air</Link>
+				<Link to="/tv/category/popular">Popular</Link>
+				<Link to="/tv/category/top-rated">Top Rated</Link>
+			</div>
+			<ImageGrid results={gridData} onClick={(id) => navigate(`/tv/${id}/credits`)} />
+			<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
+		</section>
 	);
 };

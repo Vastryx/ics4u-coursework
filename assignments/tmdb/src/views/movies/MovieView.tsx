@@ -8,8 +8,10 @@ import { useTmdb } from '@/hooks';
 
 export const MovieView = () => {
 	const navigate = useNavigate();
-	const { id } = useParams();
-	const { data } = useTmdb<MovieRepsonse>(`movie/${id}`, { append_to_response: 'videos' }, [id]);
+	const { id, category } = useParams();
+	const { data } = useTmdb<MovieRepsonse>(`${category}/${id}`, { append_to_response: 'videos' }, [
+		id,
+	]);
 
 	const trailerVideo =
 		data?.videos?.results.find(

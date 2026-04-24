@@ -31,18 +31,18 @@ const genres = {
 		{ name: 'Mystery', key: 9648 },
 		{ name: 'Sci-Fi', key: 10765 },
 	],
-};
-
-type CategoryType = 'movies' | 'tv';
+} as const;
 
 export const GenreView = () => {
 	const navigate = useNavigate();
-	const { category, genre } = useParams();
 	const [page, setPage] = useState<number>(1);
+	const { category, genre } = useParams();
+	console.log(`discover/${category.replace('movies', 'movie')}`);
+	console.log(genres[category].find((f) => f.name.toLowerCase() === genre).key);
 	const { data } = useTmdb<Response>(
 		`discover/${category.replace('movies', 'movie')}`,
-		{ with_genre: 'jdsafdlksalkd' },
-		[page, category],
+		{ page, with_genres: genres[category].find((f) => f.name.toLowerCase() === genre).key },
+		[page, category, genre],
 	);
 
 	const gridData = (data?.results ?? []).map((result) => ({
@@ -56,16 +56,28 @@ export const GenreView = () => {
 	}
 
 	return (
-		<>
-			<Link to="/genre/movies">Movies</Link>
-			<Link to="/genre/tv">TV</Link>
-			<section className="mx-auto max-w-300 space-y-5 p-5">
-				<div className="mb-4 flex items-center justify-between">
-					<h1 className="text-3xl font-bold">Now Playing</h1>
+		<section className="mx-auto max-w-300 space-y-5 p-5">
+			<div className="flex gap-6">
+				<Link to="/genre/movies/action" match={['/genre/movies']}>
+					Movies
+				</Link>
+				<Link to="/genre/tv/action" match={['/genre/tv']}>
+					TV
+				</Link>
+			</div>
+			<div>
+				<div className="flex gap-6">
+					{genres[category].map((f, i) => {
+						return (
+							<Link key={i} to={`/genre/${category}/${f.name.toLowerCase()}`}>
+								{f.name}
+							</Link>
+						);
+					})}
 				</div>
-				<ImageGrid results={gridData} onClick={(id) => navigate(`/movie/${id}/credits`)} />
-				<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
-			</section>
-		</>
+			</div>
+			<ImageGrid results={gridData} onClick={(id) => navigate(`/movie/${id}/credits`)} />
+			<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
+		</section>
 	);
 };

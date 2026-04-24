@@ -11,9 +11,8 @@ import {
 	SearchView,
 	TelevisionView,
 	TrendingView,
+	GenreView,
 } from '@/views';
-
-import { GenreView } from './views/movies/GenreView';
 
 export const App = () => {
 	return (
@@ -32,10 +31,11 @@ export const App = () => {
 				<Route path="genre">
 					<Route path=":category/:genre" element={<GenreView />} />
 				</Route>
-				<Route path=":id" element={<MovieView />}>
+				<Route path=":category/:id" element={<MovieView />}>
 					<Route path="credits" element={<CreditsView />} />
 					<Route path="reviews" element={<ReviewsView />} />
 				</Route>
+				<Route path="search" element={<SearchView />} />
 			</Route>
 			<Route path="*" element={<ErrorView />} />
 		</Routes>

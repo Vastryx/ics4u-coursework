@@ -26,11 +26,13 @@ export const MoviesView = () => {
 
 	return (
 		<>
-			<Link to="/movies/category/now-playing">Now Playing</Link>
-			<Link to="/movies/category/popular">Popular</Link>
-			<Link to="/movies/category/top-rated">Top Rated</Link>
-			<Link to="/movies/category/upcoming">Upcoming</Link>
 			<section className="mx-auto max-w-300 space-y-5 p-5">
+				<div className="flex gap-6">
+					<Link to="/movies/category/now-playing">Now Playing</Link>
+					<Link to="/movies/category/popular">Popular</Link>
+					<Link to="/movies/category/top-rated">Top Rated</Link>
+					<Link to="/movies/category/upcoming">Upcoming</Link>
+				</div>
 				<ImageGrid results={gridData} onClick={(id) => navigate(`/movie/${id}/credits`)} />
 				<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
 			</section>
