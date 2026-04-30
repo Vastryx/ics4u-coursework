@@ -1,23 +1,44 @@
-import { type ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, type ChangeEvent } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-type SearchBarProps = {
-	value: string;
-	onChange: (value: string) => void;
-};
+import { ButtonGroup } from './ButtonGroup';
 
-export const SearchBar = ({ value, onChange }: SearchBarProps) => {
+export const SearchBar = () => {
 	const navigate = useNavigate();
+	const [type, setType] = useState('movie');
+	const [query, setQuery] = useState('');
+	const { pathname } = useLocation();
+
+	useEffect(() => {
+		navigate(`/search?q=${query}&type=${type}`);
+	}, [query]);
+
+	useEffect(() => {
+		if (pathname.startsWith('/search')) {
+			navigate(`/search?q=${query}&type=${type}`);
+		}
+	}, [type]);
+
 	return (
-		<input
-			type="search"
-			value={value}
-			onChange={(e: ChangeEvent<HTMLInputElement>) => {
-				onChange(e.target.value);
-				navigate(`/search?q=${value}`);
-			}}
-			placeholder="Search actors, directors..."
-			className="w-full rounded-xl border border-gray-700 bg-gray-800 p-3 transition focus:ring-2 focus:ring-blue-500 focus:outline-none"
-		/>
+		<>
+			<input
+				type="search"
+				value={query}
+				onChange={(e: ChangeEvent<HTMLInputElement>) => {
+					setQuery(e.target.value);
+				}}
+				placeholder="Search actors, directors..."
+				className="w-full rounded-xl border border-gray-700 bg-gray-800 p-3 transition focus:ring-2 focus:ring-blue-500 focus:outline-none"
+			/>
+			<ButtonGroup
+				value={type}
+				options={[
+					{ label: 'Movies', value: 'movie' },
+					{ label: 'TV', value: 'tv' },
+					{ label: 'Person', value: 'person' },
+				]}
+				onClick={setType}
+			/>
+		</>
 	);
 };

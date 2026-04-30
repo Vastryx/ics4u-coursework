@@ -1,9 +1,6 @@
-import { useState } from 'react';
-
 import { Link, SearchBar } from '@/components';
 
 export const Header = () => {
-	const [query, setQuery] = useState('');
 	return (
 		<header>
 			<nav className="flex items-center gap-4 bg-gray-800 p-4">
@@ -20,9 +17,7 @@ export const Header = () => {
 				<Link to="/genre/movies/action" match={['/genre']}>
 					Genre
 				</Link>
-				<div>
-					<SearchBar value={query} onChange={setQuery} />
-				</div>
+				<SearchBar />
 			</nav>
 		</header>
 	);
