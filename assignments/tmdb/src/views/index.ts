@@ -8,3 +8,5 @@ export * from '@/views/movies/TrendingView';
 export * from '@/views/movies/TelevisionView';
 export * from '@/views/movies/GenreView';
 export * from '@/views/SearchView';
+export * from '@/views/movies/TrailersView';
+export * from '@/views/movies/SeasonsView';

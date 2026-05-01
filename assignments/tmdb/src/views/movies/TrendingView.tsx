@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
-import { ButtonGroup, ImageGrid, Pagination } from '@/components';
-import { Link } from '@/components';
+import { ButtonGroup, ImageGrid, LinkGroup, Pagination } from '@/components';
 import type { Response } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
@@ -32,8 +31,12 @@ export const TrendingView = () => {
 		<section className="mx-auto max-w-300 space-y-5 p-5">
 			<div className="mb-4 flex items-center">
 				<div className="mr-auto flex gap-3">
-					<Link to="/trending/movies">Movies</Link>
-					<Link to="/trending/tv">TV</Link>
+					<LinkGroup
+						options={[
+							{ label: 'Movies', to: '/trending/movies' },
+							{ label: 'TV', to: '/trending/tv' },
+						]}
+					/>
 				</div>
 				<ButtonGroup
 					value={interval}
@@ -44,7 +47,14 @@ export const TrendingView = () => {
 					onClick={(value) => setSearchParams({ interval: value })}
 				/>
 			</div>
-			<ImageGrid results={gridData} onClick={(id) => navigate(`/movie/${id}/credits`)} />
+			<ImageGrid
+				results={gridData}
+				onClick={(id) =>
+					navigate(
+						`/${category.replace('movies', 'movie')}/${id}/${category === 'tv' ? 'seasons' : 'credits'}`,
+					)
+				}
+			/>
 			<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
 		</section>
 	);

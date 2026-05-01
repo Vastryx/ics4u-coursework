@@ -4,8 +4,8 @@ import type { ReviewsResponse } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
 export const ReviewsView = () => {
-	const { id } = useParams();
-	const { data } = useTmdb<ReviewsResponse>(`movie/${id}/reviews`, {}, []);
+	const { id, category } = useParams();
+	const { data } = useTmdb<ReviewsResponse>(`${category}/${id}/reviews`, {}, []);
 
 	if (!data) {
 		return <p className="text-center text-gray-400">Loading...</p>;

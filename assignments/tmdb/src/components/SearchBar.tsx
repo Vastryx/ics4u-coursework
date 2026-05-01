@@ -10,10 +10,6 @@ export const SearchBar = () => {
 	const { pathname } = useLocation();
 
 	useEffect(() => {
-		navigate(`/search?q=${query}&type=${type}`);
-	}, [query]);
-
-	useEffect(() => {
 		if (pathname.startsWith('/search')) {
 			navigate(`/search?q=${query}&type=${type}`);
 		}
@@ -26,6 +22,7 @@ export const SearchBar = () => {
 				value={query}
 				onChange={(e: ChangeEvent<HTMLInputElement>) => {
 					setQuery(e.target.value);
+					navigate(`/search?q=${query}&type=${type}`);
 				}}
 				placeholder="Search actors, directors..."
 				className="w-full rounded-xl border border-gray-700 bg-gray-800 p-3 transition focus:ring-2 focus:ring-blue-500 focus:outline-none"

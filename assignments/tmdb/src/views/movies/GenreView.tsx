@@ -37,8 +37,6 @@ export const GenreView = () => {
 	const navigate = useNavigate();
 	const [page, setPage] = useState<number>(1);
 	const { category, genre } = useParams();
-	console.log(`discover/${category.replace('movies', 'movie')}`);
-	console.log(genres[category].find((f) => f.name.toLowerCase() === genre).key);
 	const { data } = useTmdb<Response>(
 		`discover/${category.replace('movies', 'movie')}`,
 		{ page, with_genres: genres[category].find((f) => f.name.toLowerCase() === genre).key },
@@ -76,7 +74,14 @@ export const GenreView = () => {
 					})}
 				</div>
 			</div>
-			<ImageGrid results={gridData} onClick={(id) => navigate(`/movie/${id}/credits`)} />
+			<ImageGrid
+				results={gridData}
+				onClick={(id) =>
+					navigate(
+						`/${category.replace('movies', 'movie')}/${id}/${category === 'tv' ? 'seasons' : 'credits'}`,
+					)
+				}
+			/>
 			<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
 		</section>
 	);

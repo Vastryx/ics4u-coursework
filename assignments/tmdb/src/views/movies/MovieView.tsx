@@ -9,18 +9,20 @@ import { useTmdb } from '@/hooks';
 export const MovieView = () => {
 	const navigate = useNavigate();
 	const { id, category } = useParams();
-	const { data } = useTmdb<MovieRepsonse>(`${category}/${id}`, { append_to_response: 'videos' }, [
-		id,
-	]);
-
-	const trailerVideo =
-		data?.videos?.results.find(
-			(v) =>
-				v.site === 'YouTube' && v.type === 'Trailer' && v.name?.toLowerCase().includes('official'),
-		) || data?.videos?.results.find((v) => v.site === 'YouTube' && v.type === 'Trailer');
+	const { data } = useTmdb<MovieRepsonse>(`${category}/${id}`, {}, [id]);
 
 	if (!data) {
 		return <p className="text-center text-gray-400">Loading...</p>;
+	}
+
+	const options = [
+		{ label: 'Credits', to: 'credits' },
+		{ label: 'Trailers', to: 'trailers' },
+		{ label: 'Reviews', to: 'reviews' },
+	];
+
+	if (category === 'tv') {
+		options.unshift({ label: 'Seasons', to: 'seasons' });
 	}
 
 	return (
@@ -36,31 +38,19 @@ export const MovieView = () => {
 					<img
 						className="h-82.5 w-55 rounded-xl object-cover"
 						src={`${IMAGE_BASE_URL}${data.poster_path}`}
-						alt={data.title}
+						alt={data.title || data.name}
 					/>
 					<div className="flex-1 space-y-4">
-						<h1 className="text-3xl font-bold">{data.title}</h1>
+						<h1 className="text-3xl font-bold">{data.title || data.name}</h1>
 						<p className="flex items-center gap-2 text-gray-400">
 							<FaCalendarAlt />
-							{data.release_date}
+							{data.release_date || data.first_air_date}
 						</p>
-						<p className="text-gray-300">{data.overview}</p>
-						{trailerVideo && (
-							<div className="aspect-video">
-								<iframe
-									className="h-full w-full rounded-xl"
-									src={`https://www.youtube.com/embed/${trailerVideo.key}`}
-									title="Movie Trailer"
-									allowFullScreen
-								/>
-							</div>
+						{category === 'tv' && (
+							<p>{`${data.number_of_seasons} Seasons - ${data.number_of_episodes} Episodes`}</p>
 						)}
-						<LinkGroup
-							options={[
-								{ label: 'Credits', to: 'credits' },
-								{ label: 'Reviews', to: 'reviews' },
-							]}
-						/>
+						<p className="text-gray-300">{data.overview}</p>
+						<LinkGroup options={options} />
 					</div>
 				</div>
 				<Outlet />

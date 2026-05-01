@@ -11,11 +11,15 @@ export type Response = {
 export type MovieRepsonse = {
 	id: number;
 	title: string;
+	name: string;
+	first_air_date: string;
 	overview: string;
 	poster_path: string;
 	backdrop_path: string;
 	release_date: string;
 	vote_average: string;
+	number_of_episodes: number;
+	number_of_seasons: number;
 	videos?: {
 		results: Array<{
 			key: string;
@@ -24,6 +28,16 @@ export type MovieRepsonse = {
 			type: string;
 		}>;
 	};
+	seasons?: Array<{
+		air_date: string;
+		episode_count: number;
+		id: number;
+		name: string;
+		overview: string;
+		poster_path: string;
+		season_number: number;
+		vote_average: number;
+	}>;
 };
 
 export type CreditsResponse = {

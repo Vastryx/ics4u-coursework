@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { ImageGrid, Link, Pagination } from '@/components';
+import { ImageGrid, LinkGroup, Pagination } from '@/components';
 import type { Response } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
@@ -27,12 +27,16 @@ export const TelevisionView = () => {
 	return (
 		<section className="mx-auto max-w-300 space-y-5 p-5">
 			<div className="flex gap-6">
-				<Link to="/tv/category/airing-today">Airing Today</Link>
-				<Link to="/tv/category/on-the-air">On The Air</Link>
-				<Link to="/tv/category/popular">Popular</Link>
-				<Link to="/tv/category/top-rated">Top Rated</Link>
+				<LinkGroup
+					options={[
+						{ label: 'Airing Today', to: '/tv/category/airing-today' },
+						{ label: 'On The Air', to: '/tv/category/on-the-air' },
+						{ label: 'Popular', to: '/tv/category/popular' },
+						{ label: 'Top Rated', to: '/tv/category/top-rated' },
+					]}
+				/>
 			</div>
-			<ImageGrid results={gridData} onClick={(id) => navigate(`/tv/${id}/credits`)} />
+			<ImageGrid results={gridData} onClick={(id) => navigate(`/tv/${id}/seasons`)} />
 			<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
 		</section>
 	);

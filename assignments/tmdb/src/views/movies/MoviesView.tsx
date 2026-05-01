@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { ImageGrid, Link, Pagination } from '@/components';
+import { ImageGrid, LinkGroup, Pagination } from '@/components';
 import type { Response } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
@@ -28,10 +28,14 @@ export const MoviesView = () => {
 		<>
 			<section className="mx-auto max-w-300 space-y-5 p-5">
 				<div className="flex gap-6">
-					<Link to="/movies/category/now-playing">Now Playing</Link>
-					<Link to="/movies/category/popular">Popular</Link>
-					<Link to="/movies/category/top-rated">Top Rated</Link>
-					<Link to="/movies/category/upcoming">Upcoming</Link>
+					<LinkGroup
+						options={[
+							{ label: 'Now Playing', to: '/movies/category/now-playing' },
+							{ label: 'Popular', to: '/movies/category/popular' },
+							{ label: 'Top Rated', to: '/movies/category/top-rated' },
+							{ label: 'Upcoming', to: '/movies/category/upcoming' },
+						]}
+					/>
 				</div>
 				<ImageGrid results={gridData} onClick={(id) => navigate(`/movie/${id}/credits`)} />
 				<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
