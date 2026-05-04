@@ -1,11 +1,12 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import type { ReviewsResponse } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
 export const ReviewsView = () => {
-	const { id, category } = useParams();
-	const mediaCategory = category ?? 'movie';
+	const { pathname } = useLocation();
+	const { id } = useParams();
+	const mediaCategory = pathname.startsWith('/tv/') ? 'tv' : 'movie';
 	const { data } = useTmdb<ReviewsResponse>(`${mediaCategory}/${id}/reviews`);
 
 	if (!data) {

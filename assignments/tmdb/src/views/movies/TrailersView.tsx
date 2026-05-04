@@ -1,11 +1,12 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import type { MovieRepsonse } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
 export const TrailersView = () => {
-	const { id, category } = useParams();
-	const mediaCategory = category?.replace('movies', 'movie') ?? 'movie';
+	const { pathname } = useLocation();
+	const { id } = useParams();
+	const mediaCategory = pathname.startsWith('/tv/') ? 'tv' : 'movie';
 	const { data } = useTmdb<MovieRepsonse>(`${mediaCategory}/${id}`, {
 		append_to_response: 'videos',
 	});

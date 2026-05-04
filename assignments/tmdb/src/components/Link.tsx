@@ -16,10 +16,10 @@ export const Link = ({ children, to, match = [] }: LinkProps) => {
 			replace
 			to={to}
 			className={({ isActive }) =>
-				`rounded-md border px-4 py-2 transition-all duration-200 ${
+				`rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
 					isActive || matched
-						? 'scale-105 border-white bg-white text-gray-900 shadow-lg'
-						: 'border-gray-700 bg-gray-700 text-gray-300 hover:border-gray-500 hover:bg-gray-600 hover:text-white'
+						? 'bg-white/10 text-white shadow-sm ring-1 ring-white/20'
+						: 'text-slate-400 hover:bg-white/5 hover:text-white'
 				}`
 			}
 		>

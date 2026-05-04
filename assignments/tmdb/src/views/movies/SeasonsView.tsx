@@ -5,9 +5,8 @@ import type { MovieRepsonse } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
 export const SeasonsView = () => {
-	const { id, category } = useParams();
-	const mediaCategory = category ?? 'tv';
-	const { data } = useTmdb<MovieRepsonse>(`${mediaCategory}/${id}`);
+	const { id } = useParams();
+	const { data } = useTmdb<MovieRepsonse>(`tv/${id}`);
 
 	const gridData = (data?.seasons ?? []).map((result) => ({
 		id: result.id,

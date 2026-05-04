@@ -1,19 +1,23 @@
 import { FaCalendarAlt } from 'react-icons/fa';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { LinkGroup, Modal } from '@/components';
 import { IMAGE_BASE_URL, ORIGINAL_IMAGE_BASE_URL } from '@/core/constants';
 import type { MovieRepsonse } from '@/core/types';
 import { useTmdb } from '@/hooks';
+import { ErrorView } from '@/views/ErrorView';
 
 export const MovieView = () => {
 	const navigate = useNavigate();
-	const { id, category } = useParams();
-	const mediaCategory = category ?? 'movie';
+	const { pathname } = useLocation();
+	const { id } = useParams();
+	const mediaCategory = pathname.startsWith('/tv/') ? 'tv' : 'movie';
 	const { data } = useTmdb<MovieRepsonse>(`${mediaCategory}/${id}`);
 
-	if (!data) {
+	if (data === undefined) {
 		return <p className="text-center text-gray-400">Loading...</p>;
+	} else if (data === null) {
+		return <ErrorView />;
 	}
 
 	const options = [
@@ -22,7 +26,7 @@ export const MovieView = () => {
 		{ label: 'Reviews', to: 'reviews' },
 	];
 
-	if (category === 'tv') {
+	if (mediaCategory === 'tv') {
 		options.unshift({ label: 'Seasons', to: 'seasons' });
 	}
 
@@ -47,7 +51,7 @@ export const MovieView = () => {
 							<FaCalendarAlt />
 							{data.release_date || data.first_air_date}
 						</p>
-						{category === 'tv' && (
+						{mediaCategory === 'tv' && (
 							<p>{`${data.number_of_seasons} Seasons - ${data.number_of_episodes} Episodes`}</p>
 						)}
 						<p className="text-gray-300">{data.overview}</p>

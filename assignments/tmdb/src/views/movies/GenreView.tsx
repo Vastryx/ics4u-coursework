@@ -1,45 +1,23 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ImageGrid, Pagination } from '@/components';
-import { Link } from '@/components';
+import { LinkGroup } from '@/components';
+import { genres } from '@/core/routes';
 import type { Response } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
-const genres = {
-	movies: [
-		{ name: 'Action', key: 28 },
-		{ name: 'Adventure', key: 12 },
-		{ name: 'Animation', key: 16 },
-		{ name: 'Crime', key: 80 },
-		{ name: 'Family', key: 10751 },
-		{ name: 'Fantasy', key: 14 },
-		{ name: 'History', key: 36 },
-		{ name: 'Horror', key: 27 },
-		{ name: 'Mystery', key: 9648 },
-		{ name: 'Sci-Fi', key: 878 },
-	],
-	tv: [
-		{ name: 'Action', key: 10759 },
-		{ name: 'Animation', key: 16 },
-		{ name: 'Comedy', key: 35 },
-		{ name: 'Crime', key: 80 },
-		{ name: 'Documentary', key: 99 },
-		{ name: 'Drama', key: 18 },
-		{ name: 'Family', key: 10751 },
-		{ name: 'Kids', key: 10762 },
-		{ name: 'Mystery', key: 9648 },
-		{ name: 'Sci-Fi', key: 10765 },
-	],
-} as const;
+type GenreViewProps = {
+	category: 'movies' | 'tv';
+	genre: string;
+};
 
-export const GenreView = () => {
+export const GenreView = ({ category, genre }: GenreViewProps) => {
 	const navigate = useNavigate();
-	const { category, genre } = useParams();
-	const mediaCategory = category === 'tv' ? 'tv' : 'movies';
-	const genreKey = genres[mediaCategory].find((f) => f.name.toLowerCase() === genre)?.key ?? 0;
+	const genreData = genres[category][genre as keyof (typeof genres)[typeof category]];
+	const genreKey = genreData.key;
 	const [page, setPage] = useState<number>(1);
-	const { data } = useTmdb<Response>(`discover/${mediaCategory === 'movies' ? 'movie' : 'tv'}`, {
+	const { data } = useTmdb<Response>(`discover/${category === 'movies' ? 'movie' : 'tv'}`, {
 		page,
 		with_genres: genreKey,
 	});
@@ -56,30 +34,29 @@ export const GenreView = () => {
 
 	return (
 		<section className="mx-auto max-w-300 space-y-5 p-5">
-			<div className="flex gap-6">
-				<Link to="/genre/movies/action" match={['/genre/movies']}>
-					Movies
-				</Link>
-				<Link to="/genre/tv/action" match={['/genre/tv']}>
-					TV
-				</Link>
-			</div>
+			<LinkGroup
+				options={[
+					{
+						label: 'Movies',
+						to: '/genre/movies/action',
+						match: ['/genre/movies'],
+					},
+					{ label: 'TV', to: '/genre/tv/action', match: ['/genre/tv'] },
+				]}
+			/>
 			<div>
-				<div className="flex gap-6">
-					{genres[mediaCategory].map((f, i) => {
-						return (
-							<Link key={i} to={`/genre/${mediaCategory}/${f.name.toLowerCase()}`}>
-								{f.name}
-							</Link>
-						);
-					})}
-				</div>
+				<LinkGroup
+					options={Object.entries(genres[category]).map(([slug, item]) => ({
+						label: item.label,
+						to: `/genre/${category}/${slug}`,
+					}))}
+				/>
 			</div>
 			<ImageGrid
 				results={gridData}
 				onClick={(id) =>
 					navigate(
-						`/${mediaCategory === 'movies' ? 'movie' : 'tv'}/${id}/${mediaCategory === 'tv' ? 'seasons' : 'credits'}`,
+						`/${category === 'movies' ? 'movie' : 'tv'}/${id}/${category === 'tv' ? 'seasons' : 'credits'}`,
 					)
 				}
 			/>

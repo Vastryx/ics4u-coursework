@@ -1,31 +1,41 @@
 import { useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { ButtonGroup, ImageGrid, LinkGroup, Pagination } from '@/components';
 import type { Response } from '@/core/types';
 import { useTmdb } from '@/hooks';
+import { ErrorView } from '@/views/ErrorView';
 
-export const TrendingView = () => {
+type TrendingViewProps = {
+	category: 'movies' | 'tv';
+};
+
+export const TrendingView = ({ category }: TrendingViewProps) => {
 	const navigate = useNavigate();
-	const { category } = useParams();
-	const mediaCategory = category?.replace('movies', 'movie') ?? 'movie';
+	const mediaCategory = category.replace('movies', 'movie');
 	const [page, setPage] = useState<number>(1);
 	const [searchParams, setSearchParams] = useSearchParams();
-	const interval = searchParams.get('interval') || 'day';
+	const intervalParam = searchParams.get('interval');
+	const interval = intervalParam || 'day';
+
+	if (interval !== 'day' && interval !== 'week') {
+		return <ErrorView />;
+	}
+
 	const { data } = useTmdb<Response>(`trending/${mediaCategory}/${interval}`, {
 		page,
 		time_window: interval,
 	});
+
+	if (!data) {
+		return <p className="text-center text-gray-400">Loading...</p>;
+	}
 
 	const gridData = (data?.results ?? []).map((result) => ({
 		id: result.id,
 		imagePath: result.poster_path,
 		primaryText: result.original_title || result.original_name || '',
 	}));
-
-	if (!data) {
-		return <p className="text-center text-gray-400">Loading...</p>;
-	}
 
 	return (
 		<section className="mx-auto max-w-300 space-y-5 p-5">

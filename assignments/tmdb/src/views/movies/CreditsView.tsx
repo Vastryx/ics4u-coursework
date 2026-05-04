@@ -1,12 +1,13 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { ImageGrid } from '@/components';
 import type { CreditsResponse } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
 export const CreditsView = () => {
-	const { id, category } = useParams();
-	const mediaCategory = category?.replace('movies', 'movie') ?? 'movie';
+	const { pathname } = useLocation();
+	const { id } = useParams();
+	const mediaCategory = pathname.startsWith('/tv/') ? 'tv' : 'movie';
 	const { data } = useTmdb<CreditsResponse>(`${mediaCategory}/${id}/credits`);
 
 	const gridData = (data?.cast ?? []).map((result) => ({

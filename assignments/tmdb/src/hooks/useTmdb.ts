@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios, { CanceledError } from 'axios';
 import { useEffect, useState } from 'react';
 
 export function useTmdb<T>(url: string, params?: Record<string, unknown>) {
-	const [data, setData] = useState<T | null>(null);
+	const [data, setData] = useState<T | null>();
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -21,6 +21,9 @@ export function useTmdb<T>(url: string, params?: Record<string, unknown>) {
 				setData(response.data);
 			} catch (error) {
 				console.error(error);
+				if (!(error instanceof CanceledError)) {
+					setData(null);
+				}
 			}
 		};
 

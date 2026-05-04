@@ -1,14 +1,17 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ImageGrid, LinkGroup, Pagination } from '@/components';
 import type { Response } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
-export const MoviesView = () => {
+type MoviesViewProps = {
+	category: string;
+};
+
+export const MoviesView = ({ category }: MoviesViewProps) => {
 	const navigate = useNavigate();
-	const { category } = useParams();
-	const mediaCategory = category?.replaceAll('-', '_') ?? 'popular';
+	const mediaCategory = category.replaceAll('-', '_');
 	const [page, setPage] = useState<number>(1);
 	const { data } = useTmdb<Response>(`movie/${mediaCategory}`, { page });
 

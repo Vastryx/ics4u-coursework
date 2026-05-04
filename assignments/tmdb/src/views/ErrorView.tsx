@@ -6,7 +6,7 @@ export const ErrorView = () => {
 	const navigate = useNavigate();
 
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-center space-y-4 bg-gray-900 text-white">
+		<main className="flex min-h-screen flex-col items-center justify-center space-y-4 bg-slate-950 text-white">
 			<h1 className="text-4xl font-bold">404</h1>
 			<p className="text-gray-500">Page not found</p>
 			<Button onClick={() => navigate(-1)}>Back</Button>
