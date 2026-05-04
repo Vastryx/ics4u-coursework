@@ -9,7 +9,8 @@ import { useTmdb } from '@/hooks';
 export const MovieView = () => {
 	const navigate = useNavigate();
 	const { id, category } = useParams();
-	const { data } = useTmdb<MovieRepsonse>(`${category}/${id}`, {}, [id]);
+	const mediaCategory = category ?? 'movie';
+	const { data } = useTmdb<MovieRepsonse>(`${mediaCategory}/${id}`);
 
 	if (!data) {
 		return <p className="text-center text-gray-400">Loading...</p>;

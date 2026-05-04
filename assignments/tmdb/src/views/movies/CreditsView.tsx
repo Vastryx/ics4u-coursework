@@ -6,11 +6,8 @@ import { useTmdb } from '@/hooks';
 
 export const CreditsView = () => {
 	const { id, category } = useParams();
-	const { data } = useTmdb<CreditsResponse>(
-		`${category.replace('movies', 'movie')}/${id}/credits`,
-		{},
-		[],
-	);
+	const mediaCategory = category?.replace('movies', 'movie') ?? 'movie';
+	const { data } = useTmdb<CreditsResponse>(`${mediaCategory}/${id}/credits`);
 
 	const gridData = (data?.cast ?? []).map((result) => ({
 		id: result.id,

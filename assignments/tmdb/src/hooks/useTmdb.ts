@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-export function useTmdb<T>(path: string, params: Record<string, any>, deps: any[]) {
+export function useTmdb<T>(url: string, params?: Record<string, unknown>) {
 	const [data, setData] = useState<T | null>(null);
 
 	useEffect(() => {
@@ -9,28 +9,25 @@ export function useTmdb<T>(path: string, params: Record<string, any>, deps: any[
 
 		const fetchData = async () => {
 			try {
-				const response = await axios.get<T>(path, {
+				const response = await axios.get<T>(url, {
 					baseURL: 'https://api.themoviedb.org/3',
-					auth: null,
 					headers: {
 						Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
 					},
-					params: {
-						...params,
-					},
+					params,
 					signal: controller.signal,
 				});
 
 				setData(response.data);
-			} catch (err) {
-				console.error(err);
+			} catch (error) {
+				console.error(error);
 			}
 		};
 
 		void fetchData();
 
 		return () => controller.abort();
-	}, deps);
+	}, [url, params]);
 
 	return { data };
 }

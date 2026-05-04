@@ -35,18 +35,19 @@ const genres = {
 
 export const GenreView = () => {
 	const navigate = useNavigate();
-	const [page, setPage] = useState<number>(1);
 	const { category, genre } = useParams();
-	const { data } = useTmdb<Response>(
-		`discover/${category.replace('movies', 'movie')}`,
-		{ page, with_genres: genres[category].find((f) => f.name.toLowerCase() === genre).key },
-		[page, category, genre],
-	);
+	const mediaCategory = category === 'tv' ? 'tv' : 'movies';
+	const genreKey = genres[mediaCategory].find((f) => f.name.toLowerCase() === genre)?.key ?? 0;
+	const [page, setPage] = useState<number>(1);
+	const { data } = useTmdb<Response>(`discover/${mediaCategory === 'movies' ? 'movie' : 'tv'}`, {
+		page,
+		with_genres: genreKey,
+	});
 
 	const gridData = (data?.results ?? []).map((result) => ({
 		id: result.id,
 		imagePath: result.poster_path,
-		primaryText: result.original_title || result.original_name,
+		primaryText: result.original_title || result.original_name || '',
 	}));
 
 	if (!data) {
@@ -65,9 +66,9 @@ export const GenreView = () => {
 			</div>
 			<div>
 				<div className="flex gap-6">
-					{genres[category].map((f, i) => {
+					{genres[mediaCategory].map((f, i) => {
 						return (
-							<Link key={i} to={`/genre/${category}/${f.name.toLowerCase()}`}>
+							<Link key={i} to={`/genre/${mediaCategory}/${f.name.toLowerCase()}`}>
 								{f.name}
 							</Link>
 						);
@@ -78,7 +79,7 @@ export const GenreView = () => {
 				results={gridData}
 				onClick={(id) =>
 					navigate(
-						`/${category.replace('movies', 'movie')}/${id}/${category === 'tv' ? 'seasons' : 'credits'}`,
+						`/${mediaCategory === 'movies' ? 'movie' : 'tv'}/${id}/${mediaCategory === 'tv' ? 'seasons' : 'credits'}`,
 					)
 				}
 			/>

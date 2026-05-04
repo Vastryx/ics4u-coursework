@@ -5,11 +5,10 @@ import { useTmdb } from '@/hooks';
 
 export const TrailersView = () => {
 	const { id, category } = useParams();
-	const { data } = useTmdb<MovieRepsonse>(
-		`${category.replace('movies', 'movie')}/${id}`,
-		{ append_to_response: 'videos' },
-		[id],
-	);
+	const mediaCategory = category?.replace('movies', 'movie') ?? 'movie';
+	const { data } = useTmdb<MovieRepsonse>(`${mediaCategory}/${id}`, {
+		append_to_response: 'videos',
+	});
 
 	if (!data) {
 		return <p className="text-center text-gray-400">Loading...</p>;

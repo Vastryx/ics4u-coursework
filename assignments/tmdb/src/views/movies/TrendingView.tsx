@@ -8,19 +8,19 @@ import { useTmdb } from '@/hooks';
 export const TrendingView = () => {
 	const navigate = useNavigate();
 	const { category } = useParams();
+	const mediaCategory = category?.replace('movies', 'movie') ?? 'movie';
 	const [page, setPage] = useState<number>(1);
 	const [searchParams, setSearchParams] = useSearchParams();
 	const interval = searchParams.get('interval') || 'day';
-	const { data } = useTmdb<Response>(
-		`trending/${category.replace('movies', 'movie')}/${interval}`,
-		{ page, time_window: interval },
-		[page, interval, category],
-	);
+	const { data } = useTmdb<Response>(`trending/${mediaCategory}/${interval}`, {
+		page,
+		time_window: interval,
+	});
 
 	const gridData = (data?.results ?? []).map((result) => ({
 		id: result.id,
 		imagePath: result.poster_path,
-		primaryText: result.original_title || result.original_name,
+		primaryText: result.original_title || result.original_name || '',
 	}));
 
 	if (!data) {
@@ -50,9 +50,7 @@ export const TrendingView = () => {
 			<ImageGrid
 				results={gridData}
 				onClick={(id) =>
-					navigate(
-						`/${category.replace('movies', 'movie')}/${id}/${category === 'tv' ? 'seasons' : 'credits'}`,
-					)
+					navigate(`/${mediaCategory}/${id}/${category === 'tv' ? 'seasons' : 'credits'}`)
 				}
 			/>
 			<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />

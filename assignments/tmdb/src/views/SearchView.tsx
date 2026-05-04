@@ -7,24 +7,23 @@ import { useDebounce, useTmdb } from '@/hooks';
 
 export const SearchView = () => {
 	const [page, setPage] = useState<number>(1);
-	const [searchParams, setSearchParams] = useSearchParams();
-	const query = searchParams.get('q');
-	const type = searchParams.get('type');
+	const [searchParams] = useSearchParams();
+	const query = searchParams.get('q') ?? '';
+	const type = searchParams.get('type') ?? 'movie';
 	const debouncedQuery = useDebounce(query, 500);
-	const { data } = useTmdb<SearchResponse>(`search/${type}`, { query: debouncedQuery, page }, [
-		debouncedQuery,
+	const { data } = useTmdb<SearchResponse>(`search/${type}`, {
+		query: debouncedQuery,
 		page,
-		type,
-	]);
+	});
 
 	useEffect(() => {
 		setPage(1);
-	}, [debouncedQuery]);
+	}, [debouncedQuery, type]);
 
 	const gridData = (data?.results ?? []).map((result) => ({
 		id: result.id,
 		imagePath: result.poster_path || result.profile_path,
-		primaryText: result.original_title || result.original_name,
+		primaryText: result.original_title || result.original_name || result.name,
 	}));
 
 	if (!data) {

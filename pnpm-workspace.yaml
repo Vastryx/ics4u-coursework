@@ -1,2 +1,4 @@
 packages:
   - 'assignments/*'
+allowBuilds:
+  esbuild: true

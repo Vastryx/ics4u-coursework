@@ -8,16 +8,14 @@ import { useTmdb } from '@/hooks';
 export const TelevisionView = () => {
 	const navigate = useNavigate();
 	const { category } = useParams();
+	const mediaCategory = category?.replaceAll('-', '_') ?? 'popular';
 	const [page, setPage] = useState<number>(1);
-	const { data } = useTmdb<Response>(`tv/${category.replaceAll('-', '_')}`, { page }, [
-		page,
-		category,
-	]);
+	const { data } = useTmdb<Response>(`tv/${mediaCategory}`, { page });
 
 	const gridData = (data?.results ?? []).map((result) => ({
 		id: result.id,
 		imagePath: result.poster_path,
-		primaryText: result.original_title || result.original_name,
+		primaryText: result.original_title || result.original_name || '',
 	}));
 
 	if (!data) {

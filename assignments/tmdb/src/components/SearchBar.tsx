@@ -11,9 +11,9 @@ export const SearchBar = () => {
 
 	useEffect(() => {
 		if (pathname.startsWith('/search')) {
-			navigate(`/search?q=${query}&type=${type}`);
+			void navigate(`/search?q=${query}&type=${type}`);
 		}
-	}, [type]);
+	}, [navigate, pathname, query, type]);
 
 	return (
 		<>
@@ -21,8 +21,11 @@ export const SearchBar = () => {
 				type="search"
 				value={query}
 				onChange={(e: ChangeEvent<HTMLInputElement>) => {
-					setQuery(e.target.value);
-					navigate(`/search?q=${query}&type=${type}`);
+					const nextQuery = e.target.value;
+					setQuery(nextQuery);
+					if (!pathname.startsWith('/search')) {
+						void navigate(`/search?q=${nextQuery}&type=${type}`);
+					}
 				}}
 				placeholder="Search actors, directors..."
 				className="w-full rounded-xl border border-gray-700 bg-gray-800 p-3 transition focus:ring-2 focus:ring-blue-500 focus:outline-none"

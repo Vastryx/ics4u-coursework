@@ -6,7 +6,8 @@ import { useTmdb } from '@/hooks';
 
 export const SeasonsView = () => {
 	const { id, category } = useParams();
-	const { data } = useTmdb<MovieRepsonse>(`${category}/${id}`, {}, [id]);
+	const mediaCategory = category ?? 'tv';
+	const { data } = useTmdb<MovieRepsonse>(`${mediaCategory}/${id}`);
 
 	const gridData = (data?.seasons ?? []).map((result) => ({
 		id: result.id,
@@ -22,7 +23,7 @@ export const SeasonsView = () => {
 	return (
 		<section className="px-2">
 			<h2 className="mb-6 text-2xl font-bold">Seasons</h2>
-			{data.seasons.length ? (
+			{data.seasons?.length ? (
 				<ImageGrid results={gridData} />
 			) : (
 				<p className="text-center text-gray-400">No seasons available.</p>
