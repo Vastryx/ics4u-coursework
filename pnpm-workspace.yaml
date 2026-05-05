@@ -1,4 +1,5 @@
 packages:
   - 'assignments/*'
+  - 'demo/*'
 allowBuilds:
   esbuild: true

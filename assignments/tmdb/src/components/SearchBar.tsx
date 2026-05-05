@@ -32,7 +32,7 @@ export const SearchBar = () => {
 							void navigate(`/search?q=${nextQuery}&type=${type}`);
 						}
 					}}
-					placeholder="Search actors, directors..."
+					placeholder="Search"
 					className="block w-full rounded-full border border-white/10 bg-slate-800/50 p-2.5 pl-10 text-sm text-white placeholder-slate-400 backdrop-blur-sm transition-all focus:border-blue-500 focus:bg-slate-800 focus:ring-1 focus:ring-blue-500 focus:outline-none"
 				/>
 			</div>
