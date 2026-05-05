@@ -2,8 +2,9 @@ import { FaCalendarAlt } from 'react-icons/fa';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { LinkGroup, Modal } from '@/components';
+import type { MovieResponse } from '@/core/apiResponses';
 import { IMAGE_BASE_URL, ORIGINAL_IMAGE_BASE_URL } from '@/core/constants';
-import type { MovieRepsonse } from '@/core/types';
+import type { LinkGroupOptions } from '@/core/types';
 import { useTmdb } from '@/hooks';
 import { ErrorView } from '@/views/ErrorView';
 
@@ -12,7 +13,7 @@ export const MovieView = () => {
 	const { pathname } = useLocation();
 	const { id } = useParams();
 	const mediaCategory = pathname.startsWith('/tv/') ? 'tv' : 'movie';
-	const { data } = useTmdb<MovieRepsonse>(`${mediaCategory}/${id}`);
+	const { data } = useTmdb<MovieResponse>(`${mediaCategory}/${id}`);
 
 	if (data === undefined) {
 		return <p className="text-center text-gray-400">Loading...</p>;
@@ -20,14 +21,18 @@ export const MovieView = () => {
 		return <ErrorView />;
 	}
 
-	const options = [
+	const options: LinkGroupOptions = [
 		{ label: 'Credits', to: 'credits' },
 		{ label: 'Trailers', to: 'trailers' },
 		{ label: 'Reviews', to: 'reviews' },
 	];
 
 	if (mediaCategory === 'tv') {
-		options.unshift({ label: 'Seasons', to: 'seasons' });
+		options.unshift({
+			label: 'Seasons',
+			to: 'seasons',
+			match: ['tv/:id/season'],
+		});
 	}
 
 	return (

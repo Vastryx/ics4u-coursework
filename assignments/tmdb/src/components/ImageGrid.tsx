@@ -1,14 +1,5 @@
 import { IMAGE_BASE_URL } from '@/core/constants';
-
-type ImageGridProps = {
-	results: Array<{
-		id: number;
-		imagePath: string | null;
-		primaryText: string;
-		secondaryText?: string;
-	}>;
-	onClick?: (id: number) => void;
-};
+import type { ImageGridProps } from '@/core/types';
 
 export const ImageGrid = ({ results, onClick }: ImageGridProps) => {
 	return (
@@ -16,8 +7,8 @@ export const ImageGrid = ({ results, onClick }: ImageGridProps) => {
 			{results.map((result) => (
 				<div
 					key={result.id}
-					className="group relative flex cursor-pointer flex-col overflow-hidden rounded-xl bg-slate-900 shadow-sm ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/10 hover:ring-blue-500/50"
-					onClick={() => onClick?.(result.id)}
+					className={`${onClick ? 'cursor-pointer' : ''} group relative flex flex-col overflow-hidden rounded-xl bg-slate-900 shadow-sm ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/10 hover:ring-blue-500/50`}
+					onClick={() => onClick?.(result.id, result)}
 				>
 					<div className="relative aspect-2/3 w-full overflow-hidden bg-slate-800">
 						{result.imagePath ? (

@@ -1,6 +1,6 @@
 import { useLocation, useParams } from 'react-router-dom';
 
-import type { ReviewsResponse } from '@/core/types';
+import type { ReviewsResponse } from '@/core/apiResponses';
 import { useTmdb } from '@/hooks';
 
 export const ReviewsView = () => {

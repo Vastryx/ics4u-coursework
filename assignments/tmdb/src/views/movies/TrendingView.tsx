@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { ButtonGroup, ImageGrid, LinkGroup, Pagination } from '@/components';
-import type { Response } from '@/core/types';
+import type { MediaListResponse } from '@/core/apiResponses';
+import type { ImageGridResults } from '@/core/types';
 import { useTmdb } from '@/hooks';
 import { ErrorView } from '@/views/ErrorView';
 
@@ -22,7 +23,7 @@ export const TrendingView = ({ category }: TrendingViewProps) => {
 		return <ErrorView />;
 	}
 
-	const { data } = useTmdb<Response>(`trending/${mediaCategory}/${interval}`, {
+	const { data } = useTmdb<MediaListResponse>(`trending/${mediaCategory}/${interval}`, {
 		page,
 		time_window: interval,
 	});
@@ -31,7 +32,7 @@ export const TrendingView = ({ category }: TrendingViewProps) => {
 		return <p className="text-center text-gray-400">Loading...</p>;
 	}
 
-	const gridData = (data?.results ?? []).map((result) => ({
+	const gridData: ImageGridResults = (data?.results ?? []).map((result) => ({
 		id: result.id,
 		imagePath: result.poster_path,
 		primaryText: result.original_title || result.original_name || '',

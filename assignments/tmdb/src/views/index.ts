@@ -10,3 +10,7 @@ export * from '@/views/movies/GenreView';
 export * from '@/views/SearchView';
 export * from '@/views/movies/TrailersView';
 export * from '@/views/movies/SeasonsView';
+export * from '@/views/movies/EpisodeView';
+export * from '@/views/person/CareerView';
+export * from '@/views/person/Imagesview';
+export * from '@/views/person/PersonView';

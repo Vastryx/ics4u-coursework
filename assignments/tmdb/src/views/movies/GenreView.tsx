@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { ImageGrid, Pagination } from '@/components';
 import { LinkGroup } from '@/components';
+import type { MediaListResponse } from '@/core/apiResponses';
 import { genres } from '@/core/routes';
-import type { Response } from '@/core/types';
+import type { ImageGridResults } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
 type GenreViewProps = {
@@ -17,12 +18,15 @@ export const GenreView = ({ category, genre }: GenreViewProps) => {
 	const genreData = genres[category][genre as keyof (typeof genres)[typeof category]];
 	const genreKey = genreData.key;
 	const [page, setPage] = useState<number>(1);
-	const { data } = useTmdb<Response>(`discover/${category === 'movies' ? 'movie' : 'tv'}`, {
-		page,
-		with_genres: genreKey,
-	});
+	const { data } = useTmdb<MediaListResponse>(
+		`discover/${category === 'movies' ? 'movie' : 'tv'}`,
+		{
+			page,
+			with_genres: genreKey,
+		},
+	);
 
-	const gridData = (data?.results ?? []).map((result) => ({
+	const gridData: ImageGridResults = (data?.results ?? []).map((result) => ({
 		id: result.id,
 		imagePath: result.poster_path,
 		primaryText: result.original_title || result.original_name || '',

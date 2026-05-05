@@ -15,6 +15,10 @@ import {
 	GenreView,
 	TrailersView,
 	SeasonsView,
+	EpisodeView,
+	PersonView,
+	CareerView,
+	ImagesView,
 } from '@/views';
 
 export const App = () => {
@@ -69,8 +73,15 @@ export const App = () => {
 					</Route>
 					<Route path="tv/:id" element={<MovieView />}>
 						<Route path="seasons" element={<SeasonsView />} />
+						<Route path="credits" element={<CreditsView />} />
 						<Route path="reviews" element={<ReviewsView />} />
 						<Route path="trailers" element={<TrailersView />} />
+						<Route path="season/:seasonNumber" element={<EpisodeView />} />
+					</Route>
+					<Route path="person/:id" element={<PersonView />}>
+						<Route index element={<CareerView />} />
+						<Route path="career" element={<CareerView />} />
+						<Route path="images" element={<ImagesView />} />
 					</Route>
 					<Route path="search" element={<SearchView />} />
 				</Route>

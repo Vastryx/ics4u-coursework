@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ImageGrid, LinkGroup, Pagination } from '@/components';
-import type { Response } from '@/core/types';
+import type { MediaListResponse } from '@/core/apiResponses';
+import type { ImageGridResults } from '@/core/types';
 import { useTmdb } from '@/hooks';
 
 type TelevisionViewProps = {
@@ -13,9 +14,9 @@ export const TelevisionView = ({ category }: TelevisionViewProps) => {
 	const navigate = useNavigate();
 	const mediaCategory = category.replaceAll('-', '_');
 	const [page, setPage] = useState<number>(1);
-	const { data } = useTmdb<Response>(`tv/${mediaCategory}`, { page });
+	const { data } = useTmdb<MediaListResponse>(`tv/${mediaCategory}`, { page });
 
-	const gridData = (data?.results ?? []).map((result) => ({
+	const gridData: ImageGridResults = (data?.results ?? []).map((result) => ({
 		id: result.id,
 		imagePath: result.poster_path,
 		primaryText: result.original_title || result.original_name || '',

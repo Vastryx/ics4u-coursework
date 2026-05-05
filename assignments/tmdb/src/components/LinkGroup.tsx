@@ -1,12 +1,5 @@
 import { Link } from '@/components';
-
-type LinkGroupProps = {
-	options: Array<{
-		label: string;
-		to: string;
-		match?: string[];
-	}>;
-};
+import type { LinkGroupProps } from '@/core/types';
 
 export const LinkGroup = ({ options }: LinkGroupProps) => {
 	return (

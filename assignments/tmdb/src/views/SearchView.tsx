@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { ImageGrid, Pagination } from '@/components';
-import type { SearchResponse } from '@/core/types';
+import type { SearchResponse } from '@/core/apiResponses';
+import type { ImageGridResults } from '@/core/types';
 import { useDebounce, useTmdb } from '@/hooks';
 
 export const SearchView = () => {
@@ -11,6 +12,7 @@ export const SearchView = () => {
 	const query = searchParams.get('q') ?? '';
 	const type = searchParams.get('type') ?? 'movie';
 	const debouncedQuery = useDebounce(query, 500);
+	const navigate = useNavigate();
 	const { data } = useTmdb<SearchResponse>(`search/${type}`, {
 		query: debouncedQuery,
 		page,
@@ -20,7 +22,7 @@ export const SearchView = () => {
 		setPage(1);
 	}, [debouncedQuery, type]);
 
-	const gridData = (data?.results ?? []).map((result) => ({
+	const gridData: ImageGridResults = (data?.results ?? []).map((result) => ({
 		id: result.id,
 		imagePath: result.poster_path || result.profile_path,
 		primaryText: result.original_title || result.original_name || result.name,
@@ -32,7 +34,16 @@ export const SearchView = () => {
 
 	return (
 		<section className="mx-auto max-w-300 space-y-5 p-10">
-			<ImageGrid results={gridData} />
+			<ImageGrid
+				results={gridData}
+				onClick={(id) => {
+					if (type === 'person') {
+						void navigate(`/person/${id}/career`);
+					} else {
+						void navigate(`/${type}/${id}/${type === 'tv' ? 'seasons' : 'credits'}`);
+					}
+				}}
+			/>
 			{data.results.length ? (
 				<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
 			) : (

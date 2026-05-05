@@ -20,9 +20,9 @@ export function useTmdb<T>(url: string, params?: Record<string, unknown>) {
 
 				setData(response.data);
 			} catch (error) {
-				console.error(error);
 				if (!(error instanceof CanceledError)) {
 					setData(null);
+					console.error(error);
 				}
 			}
 		};
