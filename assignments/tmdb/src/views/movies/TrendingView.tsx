@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { ButtonGroup, ImageGrid, LinkGroup, Pagination } from '@/components';
 import type { MediaListResponse } from '@/core/apiResponses';
 import type { ImageGridResults } from '@/core/types';
-import { useTmdb } from '@/hooks';
+import { usePageParam, useTmdb } from '@/hooks';
 import { ErrorView } from '@/views/ErrorView';
 
 type TrendingViewProps = {
@@ -14,7 +13,7 @@ type TrendingViewProps = {
 export const TrendingView = ({ category }: TrendingViewProps) => {
 	const navigate = useNavigate();
 	const mediaCategory = category.replace('movies', 'movie');
-	const [page, setPage] = useState<number>(1);
+	const [page, setPage] = usePageParam();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const intervalParam = searchParams.get('interval');
 	const interval = intervalParam || 'day';
@@ -55,7 +54,7 @@ export const TrendingView = ({ category }: TrendingViewProps) => {
 						{ label: 'Today', value: 'day' },
 						{ label: 'Week', value: 'week' },
 					]}
-					onClick={(value) => setSearchParams({ interval: value })}
+					onClick={(value) => setSearchParams(value === 'day' ? {} : { interval: value })}
 				/>
 			</div>
 			<ImageGrid

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ImageGrid, Pagination } from '@/components';
@@ -6,7 +5,7 @@ import { LinkGroup } from '@/components';
 import type { MediaListResponse } from '@/core/apiResponses';
 import { genres } from '@/core/routes';
 import type { ImageGridResults } from '@/core/types';
-import { useTmdb } from '@/hooks';
+import { usePageParam, useTmdb } from '@/hooks';
 
 type GenreViewProps = {
 	category: 'movies' | 'tv';
@@ -17,7 +16,7 @@ export const GenreView = ({ category, genre }: GenreViewProps) => {
 	const navigate = useNavigate();
 	const genreData = genres[category][genre as keyof (typeof genres)[typeof category]];
 	const genreKey = genreData.key;
-	const [page, setPage] = useState<number>(1);
+	const [page, setPage] = usePageParam();
 	const { data } = useTmdb<MediaListResponse>(
 		`discover/${category === 'movies' ? 'movie' : 'tv'}`,
 		{

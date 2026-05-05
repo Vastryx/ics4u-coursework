@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ImageGrid, LinkGroup, Pagination } from '@/components';
 import type { MediaListResponse } from '@/core/apiResponses';
 import type { ImageGridResults } from '@/core/types';
-import { useTmdb } from '@/hooks';
+import { usePageParam, useTmdb } from '@/hooks';
 
 type MoviesViewProps = {
 	category: string;
@@ -13,7 +12,7 @@ type MoviesViewProps = {
 export const MoviesView = ({ category }: MoviesViewProps) => {
 	const navigate = useNavigate();
 	const mediaCategory = category.replaceAll('-', '_');
-	const [page, setPage] = useState<number>(1);
+	const [page, setPage] = usePageParam();
 	const { data } = useTmdb<MediaListResponse>(`movie/${mediaCategory}`, { page });
 
 	const gridData: ImageGridResults = (data?.results ?? []).map((result) => ({
