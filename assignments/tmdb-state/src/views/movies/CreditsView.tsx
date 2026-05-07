@@ -1,8 +1,7 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { ImageGrid } from '@/components';
-import type { CreditsResponse } from '@/core/types/apiResponses';
-import type { ImageGridResults } from '@/core/types/components';
+import type { CreditsResponse, ImageCell } from '@/core';
 import { useTmdb } from '@/hooks';
 
 export const CreditsView = () => {
@@ -12,9 +11,9 @@ export const CreditsView = () => {
 	const { data } = useTmdb<CreditsResponse>(`${mediaCategory}/${id}/credits`);
 	const navigate = useNavigate();
 
-	const gridData: ImageGridResults = (data?.cast ?? []).map((result) => ({
+	const gridData: ImageCell[] = (data?.cast ?? []).map((result) => ({
 		id: result.id,
-		imagePath: result.profile_path,
+		imageUrl: result.profile_path,
 		primaryText: result.name,
 		secondaryText: result.character,
 	}));
@@ -28,7 +27,7 @@ export const CreditsView = () => {
 			<h2 className="mb-6 text-2xl font-bold">Credits</h2>
 			{data.cast.length ? (
 				<ImageGrid
-					results={gridData}
+					images={gridData}
 					onClick={(id) => {
 						void navigate(`/person/${id}/career`);
 					}}

@@ -1,10 +1,9 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { ButtonGroup, ImageGrid, LinkGroup, Pagination } from '@/components';
-import type { ImageGridResults } from '@/core/types';
-import type { MediaListResponse } from '@/core/types/apiResponses';
+import type { ImageCell, MediaListResponse } from '@/core';
 import { usePageParam, useTmdb } from '@/hooks';
-import { ErrorView } from '@/views/ErrorView';
+import { ErrorView } from '@/views';
 
 type TrendingViewProps = {
 	category: 'movies' | 'tv';
@@ -31,9 +30,9 @@ export const TrendingView = ({ category }: TrendingViewProps) => {
 		return <p className="text-center text-gray-400">Loading...</p>;
 	}
 
-	const gridData: ImageGridResults = (data?.results ?? []).map((result) => ({
+	const gridData: ImageCell[] = (data?.results ?? []).map((result) => ({
 		id: result.id,
-		imagePath: result.poster_path,
+		imageUrl: result.poster_path,
 		primaryText: result.original_title || result.original_name || '',
 	}));
 
@@ -43,22 +42,42 @@ export const TrendingView = ({ category }: TrendingViewProps) => {
 				<div className="mr-auto flex gap-3">
 					<LinkGroup
 						options={[
-							{ label: 'Movies', to: '/trending/movies' },
-							{ label: 'TV', to: '/trending/tv' },
+							{
+								label: 'Movies',
+								to: '/trending/movies',
+							},
+							{
+								label: 'TV',
+								to: '/trending/tv',
+							},
 						]}
 					/>
 				</div>
 				<ButtonGroup
 					value={interval}
 					options={[
-						{ label: 'Today', value: 'day' },
-						{ label: 'Week', value: 'week' },
+						{
+							label: 'Today',
+							value: 'day',
+						},
+						{
+							label: 'Week',
+							value: 'week',
+						},
 					]}
-					onClick={(value) => setSearchParams(value === 'day' ? {} : { interval: value })}
+					onClick={(value) =>
+						setSearchParams(
+							value === 'day'
+								? {}
+								: {
+										interval: value,
+									},
+						)
+					}
 				/>
 			</div>
 			<ImageGrid
-				results={gridData}
+				images={gridData}
 				onClick={(id) =>
 					navigate(`/${mediaCategory}/${id}/${category === 'tv' ? 'seasons' : 'credits'}`)
 				}

@@ -10,7 +10,13 @@ const configDir = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vite.dev/config/
 export default defineConfig({
-	plugins: [react(), babel({ presets: [reactCompilerPreset()] }), tailwindcss()],
+	plugins: [
+		react(),
+		babel({
+			presets: [reactCompilerPreset()],
+		}),
+		tailwindcss(),
+	],
 	resolve: {
 		alias: {
 			'@': path.resolve(configDir, 'src'),

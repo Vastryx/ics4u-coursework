@@ -22,9 +22,18 @@ export const MovieView = () => {
 	}
 
 	const options: LinkGroupOptions = [
-		{ label: 'Credits', to: 'credits' },
-		{ label: 'Trailers', to: 'trailers' },
-		{ label: 'Reviews', to: 'reviews' },
+		{
+			label: 'Credits',
+			to: 'credits',
+		},
+		{
+			label: 'Trailers',
+			to: 'trailers',
+		},
+		{
+			label: 'Reviews',
+			to: 'reviews',
+		},
 	];
 
 	if (mediaCategory === 'tv') {
@@ -36,7 +45,7 @@ export const MovieView = () => {
 	}
 
 	return (
-		<Modal onClose={() => navigate(-1)}>
+		<Modal onClick={() => navigate(-1)}>
 			<div className="space-y-6 p-6">
 				<div
 					className="h-105 rounded-2xl bg-cover bg-center"

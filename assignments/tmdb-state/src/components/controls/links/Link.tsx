@@ -9,7 +9,15 @@ type LinkProps = {
 
 export const Link = ({ children, to, match = [] }: LinkProps) => {
 	const { pathname } = useLocation();
-	const matched = match.some((pattern) => matchPath({ path: pattern, end: false }, pathname));
+	const matched = match.some((pattern) =>
+		matchPath(
+			{
+				path: pattern,
+				end: false,
+			},
+			pathname,
+		),
+	);
 
 	return (
 		<NavLink

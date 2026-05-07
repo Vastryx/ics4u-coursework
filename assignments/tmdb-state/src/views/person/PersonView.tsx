@@ -1,10 +1,10 @@
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 
 import { Button, LinkGroup } from '@/components';
-import { IMAGE_BASE_URL } from '@/core/constants';
+import { IMAGE_BASE_URL } from '@/core';
 import type { PersonResponse } from '@/core/types/apiResponses';
 import { useTmdb } from '@/hooks';
-import { ErrorView } from '@/views/ErrorView';
+import { ErrorView } from '@/views';
 
 const formatValue = (value: string | null) => value || 'N/A';
 
@@ -55,8 +55,14 @@ export const PersonView = () => {
 
 					<LinkGroup
 						options={[
-							{ label: 'Career', to: 'career' },
-							{ label: 'Images', to: 'images' },
+							{
+								label: 'Career',
+								to: 'career',
+							},
+							{
+								label: 'Images',
+								to: 'images',
+							},
 						]}
 					/>
 				</div>

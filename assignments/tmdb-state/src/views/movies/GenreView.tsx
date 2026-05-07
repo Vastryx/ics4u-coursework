@@ -2,8 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ImageGrid, Pagination } from '@/components';
 import { LinkGroup } from '@/components';
-import { genres } from '@/core/routes';
-import type { ImageGridResults } from '@/core/types';
+import { genres, type ImageCell } from '@/core';
 import type { MediaListResponse } from '@/core/types/apiResponses';
 import { usePageParam, useTmdb } from '@/hooks';
 
@@ -25,9 +24,9 @@ export const GenreView = ({ category, genre }: GenreViewProps) => {
 		},
 	);
 
-	const gridData: ImageGridResults = (data?.results ?? []).map((result) => ({
+	const gridData: ImageCell[] = (data?.results ?? []).map((result) => ({
 		id: result.id,
-		imagePath: result.poster_path,
+		imageUrl: result.poster_path,
 		primaryText: result.original_title || result.original_name || '',
 	}));
 
@@ -44,7 +43,11 @@ export const GenreView = ({ category, genre }: GenreViewProps) => {
 						to: '/genre/movies/action',
 						match: ['/genre/movies'],
 					},
-					{ label: 'TV', to: '/genre/tv/action', match: ['/genre/tv'] },
+					{
+						label: 'TV',
+						to: '/genre/tv/action',
+						match: ['/genre/tv'],
+					},
 				]}
 			/>
 			<div>
@@ -56,7 +59,7 @@ export const GenreView = ({ category, genre }: GenreViewProps) => {
 				/>
 			</div>
 			<ImageGrid
-				results={gridData}
+				images={gridData}
 				onClick={(id) =>
 					navigate(
 						`/${category === 'movies' ? 'movie' : 'tv'}/${id}/${category === 'tv' ? 'seasons' : 'credits'}`,

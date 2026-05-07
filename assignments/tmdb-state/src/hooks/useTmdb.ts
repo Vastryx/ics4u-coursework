@@ -34,5 +34,7 @@ export function useTmdb<T>(url: string, params?: Record<string, unknown>) {
 		return () => controller.abort();
 	}, [url, paramsKey, params]);
 
-	return { data };
+	return {
+		data,
+	};
 }

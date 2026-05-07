@@ -1,8 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { ImageGrid } from '@/components';
-import type { ImageGridResults } from '@/core/types';
-import type { CareerResponse } from '@/core/types/apiResponses';
+import type { ImageCell, CareerResponse } from '@/core';
 import { useTmdb } from '@/hooks';
 
 export const CareerView = () => {
@@ -10,9 +9,9 @@ export const CareerView = () => {
 	const { id } = useParams();
 	const { data } = useTmdb<CareerResponse>(`person/${id}/combined_credits`);
 
-	const gridData: ImageGridResults = (data?.cast ?? []).map((credit) => ({
+	const gridData: ImageCell[] = (data?.cast ?? []).map((credit) => ({
 		id: credit.id,
-		imagePath: credit.poster_path,
+		imageUrl: credit.poster_path,
 		primaryText: credit.title || credit.name || '',
 		secondaryText: credit.character,
 		mediaType: credit.media_type,
