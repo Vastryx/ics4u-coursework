@@ -25,8 +25,8 @@ export const SeasonsView = () => {
 			{data.seasons?.length ? (
 				<ImageGrid
 					images={gridData}
-					onClick={(seasonNumber) => {
-						void navigate(`/tv/${id}/season/${seasonNumber}`);
+					onClick={(season) => {
+						void navigate(`/tv/${id}/season/${season.id}`);
 					}}
 				/>
 			) : (

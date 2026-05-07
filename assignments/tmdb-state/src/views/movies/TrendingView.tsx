@@ -78,8 +78,8 @@ export const TrendingView = ({ category }: TrendingViewProps) => {
 			</div>
 			<ImageGrid
 				images={gridData}
-				onClick={(id) =>
-					navigate(`/${mediaCategory}/${id}/${category === 'tv' ? 'seasons' : 'credits'}`)
+				onClick={(image) =>
+					navigate(`/${mediaCategory}/${image.id}/${category === 'tv' ? 'seasons' : 'credits'}`)
 				}
 			/>
 			<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />

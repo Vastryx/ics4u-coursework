@@ -23,10 +23,10 @@ export const CareerView = () => {
 
 	return data.cast.length ? (
 		<ImageGrid
-			results={gridData}
-			onClick={(mediaId, result) =>
+			images={gridData}
+			onClick={(result) =>
 				navigate(
-					`/${result.mediaType}/${mediaId}/${result.mediaType === 'tv' ? 'seasons' : 'credits'}`,
+					`/${result.mediaType}/${result.id}/${result.mediaType === 'tv' ? 'seasons' : 'credits'}`,
 				)
 			}
 		/>

@@ -28,8 +28,8 @@ export const CreditsView = () => {
 			{data.cast.length ? (
 				<ImageGrid
 					images={gridData}
-					onClick={(id) => {
-						void navigate(`/person/${id}/career`);
+					onClick={(image) => {
+						void navigate(`/person/${image.id}/career`);
 					}}
 				/>
 			) : (

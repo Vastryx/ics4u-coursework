@@ -11,6 +11,7 @@ export type ImageCell = {
 	imageUrl: string | null;
 	primaryText: string | undefined;
 	secondaryText?: string;
+	mediaType?: 'movie' | 'tv';
 };
 
 export type LinkGroupOptions = Array<{

@@ -35,11 +35,11 @@ export const SearchView = () => {
 		<section className="mx-auto max-w-300 space-y-5 p-10">
 			<ImageGrid
 				images={gridData}
-				onClick={(id) => {
+				onClick={(image) => {
 					if (type === 'person') {
-						void navigate(`/person/${id}/career`);
+						void navigate(`/person/${image.id}/career`);
 					} else {
-						void navigate(`/${type}/${id}/${type === 'tv' ? 'seasons' : 'credits'}`);
+						void navigate(`/${type}/${image.id}/${type === 'tv' ? 'seasons' : 'credits'}`);
 					}
 				}}
 			/>

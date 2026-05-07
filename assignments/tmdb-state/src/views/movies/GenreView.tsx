@@ -60,9 +60,9 @@ export const GenreView = ({ category, genre }: GenreViewProps) => {
 			</div>
 			<ImageGrid
 				images={gridData}
-				onClick={(id) =>
+				onClick={(image) =>
 					navigate(
-						`/${category === 'movies' ? 'movie' : 'tv'}/${id}/${category === 'tv' ? 'seasons' : 'credits'}`,
+						`/${category === 'movies' ? 'movie' : 'tv'}/${image.id}/${category === 'tv' ? 'seasons' : 'credits'}`,
 					)
 				}
 			/>

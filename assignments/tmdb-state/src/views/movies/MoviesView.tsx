@@ -51,7 +51,7 @@ export const MoviesView = ({ category }: MoviesViewProps) => {
 						]}
 					/>
 				</div>
-				<ImageGrid images={gridData} onClick={(id) => navigate(`/movie/${id}/credits`)} />
+				<ImageGrid images={gridData} onClick={(image) => navigate(`/movie/${image.id}/credits`)} />
 				<Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
 			</section>
 		</>
