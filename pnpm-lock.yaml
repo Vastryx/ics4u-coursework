@@ -180,18 +180,6 @@ importers:
         specifier: ^8.0.11
         version: 8.0.11(@types/node@24.12.2)(jiti@2.7.0)
 
-  demo/tmdb:
-    devDependencies:
-      vite:
-        specifier: ^8.0.11
-        version: 8.0.11(@types/node@25.6.0)(jiti@2.7.0)
-
-  demo/tmdb-state:
-    devDependencies:
-      vite:
-        specifier: ^8.0.11
-        version: 8.0.11(@types/node@25.6.0)(jiti@2.7.0)
-
 packages:
 
   '@babel/code-frame@7.29.0':
